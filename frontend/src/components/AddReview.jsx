@@ -40,7 +40,7 @@ const AddReview = ({ placeId }) => {
             id="rating"
             className="range mt-1 range-xs"
             step="1"
-            value="2"
+            defaultValue={1}
             required
           />
         </div>

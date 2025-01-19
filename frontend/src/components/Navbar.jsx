@@ -60,7 +60,7 @@ const Navbar = () => {
             </li>
             
             <li>
-              <Link to={"/"}>About</Link>
+              <Link to={"/place/new"}>Add place</Link>
             </li>
              
             <li>
@@ -81,7 +81,7 @@ const Navbar = () => {
             <Link to={"/"}>Home</Link>
           </li>
           <li>
-            <Link to={"/about"}>About</Link>
+            <Link to={"/place/new"}>Add Place</Link>
           </li>
           <li>
             <Link to={"/contact"}>Contact</Link>

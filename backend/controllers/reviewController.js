@@ -4,14 +4,14 @@ const Place = require("../models/place");
 const addReview = async (req, res) => {
   const { placeId } = req.params;
  
-
+  const {rating,comment} = req.body;
   try {
     const place = await Place.findById(placeId);
 
     if (!place) {
       return res.status(500).json({message:"Place not found."});
     }
-    const {rating,comment} = req.body;
+
     if(!rating || !comment){
        return res.status(400).json({message:"All fields are required."});
     }

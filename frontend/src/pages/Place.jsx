@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getPlaceById } from "../api/place";
-import { useParams } from "react-router-dom";
+import { getPlaceById, removePlace } from "../api/place";
+import { useNavigate, useParams } from "react-router-dom";
 import PlaceLoading from "../components/PlaceLoading";
 import PlaceDetails from "../components/PlaceDetails";
 import AddReview from "../components/AddReview";
@@ -8,12 +8,14 @@ import Reviews from "../components/Reviews";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { deleteReview } from "../api/review";
+import NotFound from "./NotFound";
 
 const Place = () => {
   const { id } = useParams();
   const [place, setPlace] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate()
   const {user} = useSelector(state=>state.user)
 
   useEffect(() => {
@@ -44,6 +46,22 @@ const Place = () => {
       console.log(error)
     }
   }
+  const handleDeletePlace = async(placeId) =>{
+    if(!user){
+      return toast.error("You are not logged in.")
+    }
+
+    try{
+      const data = await removePlace(placeId)
+      toast.success(data.message)
+      navigate("/")
+
+    }catch(error){
+      console.log(error)
+      toast.error(error.message)
+    }
+  }
+
 
   if (loading) {
     return <PlaceLoading />;
@@ -51,15 +69,14 @@ const Place = () => {
 
   if (error) {
     return (
-      <div className="max-w-6xl mx-auto px-5">
-        <p className="text-red-600">Error: {error}</p>
-      </div>
+     <NotFound/>
     );
   }
 
   return (
     <div className="max-w-6xl mx-auto px-5 my-12">
-      {place && <PlaceDetails place={place} />}
+      {place && <PlaceDetails place={place} deletePlace={handleDeletePlace}/>}
+
       <hr />
       <AddReview placeId={place._id}/>
       {place.reviews && place.reviews.length > 0 ? (

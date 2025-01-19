@@ -6,7 +6,7 @@ const placeRouter = express.Router();
 
 
 // Route to create new place
-placeRouter.post('/new', isAuthenticated,createPlace);
+placeRouter.post('/', isAuthenticated,createPlace);
 
 
 // Route to display all places
