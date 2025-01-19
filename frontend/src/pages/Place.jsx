@@ -4,12 +4,17 @@ import { useParams } from "react-router-dom";
 import PlaceLoading from "../components/PlaceLoading";
 import PlaceDetails from "../components/PlaceDetails";
 import AddReview from "../components/AddReview";
+import Reviews from "../components/Reviews";
+import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { deleteReview } from "../api/review";
 
 const Place = () => {
   const { id } = useParams();
   const [place, setPlace] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const {user} = useSelector(state=>state.user)
 
   useEffect(() => {
     const fetchPlaceData = async () => {
@@ -24,6 +29,21 @@ const Place = () => {
     };
     fetchPlaceData();
   }, [id]);
+
+  const handleDeleteReview = async(reviewId) =>{
+    if(!user){
+      return toast.error("You are not logged in.")
+    }
+
+    try{
+      const data = await deleteReview(reviewId,place?._id)
+
+      toast.success(data.message)
+
+    }catch(error){
+      console.log(error)
+    }
+  }
 
   if (loading) {
     return <PlaceLoading />;
@@ -43,20 +63,7 @@ const Place = () => {
       <hr />
       <AddReview placeId={place._id}/>
       {place.reviews && place.reviews.length > 0 ? (
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 mb-24 gap-5">
-          {place.reviews.map((review) => (
-            <div className="card bg-base-100 shadow-xl" key={review._id}>
-              <div className="card-body">
-                <div>
-                  {Array.from({ length: review.rating }).map((_, index) => (
-                    <span key={index}>⭐</span>
-                  ))}
-                </div>
-                <p>{review.comment}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+       <Reviews reviews={place.reviews} handleDelete={handleDeleteReview}/>
       ) : (
         <p className="text-gray-500 text-center">No reviews yet.</p>
       )}

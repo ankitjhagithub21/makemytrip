@@ -7,3 +7,8 @@ export const addReview = async(review,placeId) => {
     const {data} = await axios.post(`${baseUrl}/${placeId}/reviews`,review)
     return data;
 }
+
+export const deleteReview = async(reviewId,placeId) => { 
+    const {data} = await axios.delete(`${baseUrl}/${placeId}/reviews/${reviewId}`)
+    return data;
+}

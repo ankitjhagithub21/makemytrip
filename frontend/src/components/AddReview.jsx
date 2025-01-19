@@ -16,6 +16,7 @@ const AddReview = ({placeId}) => {
     setLoading(true)
     try{
       const data = await addReview(formObject,placeId)
+      toast.success("Review added.")
       console.log(data)
     }catch(error){
       console.log(error)
