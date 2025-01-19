@@ -11,8 +11,15 @@ const addReview = async (req, res) => {
     if (!place) {
       return res.status(500).json({message:"Place not found."});
     }
-
-    const newReview = await Review.create(req.body);
+    const {rating,comment} = req.body;
+    if(!rating || !comment){
+       return res.status(400).json({message:"All fields are required."});
+    }
+    const newReview = await Review.create({
+      rating,
+      comment
+    });
+    
     place.reviews.push(newReview._id);
     await place.save();
     res.status(200).json({review:newReview});
