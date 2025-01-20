@@ -1,38 +1,8 @@
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { setIsLoggedIn, setUser } from "../redux/slices/userSlice";
-import { useEffect } from "react";
-import { getUser, logoutUser } from "../api/user";
-import toast from "react-hot-toast";
 
-const Navbar = () => {
-  const { isLoggedIn,user } = useSelector((state) => state.user);
-  const dispatch = useDispatch()
-  
-  useEffect(()=>{
-   const fetchUser = async() =>{
-      try{
-       const data = await getUser();
-       dispatch(setIsLoggedIn(true))
-       dispatch(setUser(data))
 
-      }catch(error){
-        dispatch(setIsLoggedIn(false))
-      }
-   }
-   fetchUser()
-  },[])
-
-  const logout = () => {
-     try{
-        logoutUser();
-        dispatch(setIsLoggedIn(false))
-        dispatch(setUser(null))
-        toast.success("Logout successfull.")
-     }catch(error){
-       console.log(error)
-     }
-  }
+const Navbar = ({logout,user}) => {
+ 
 
   return (
     <div className="navbar bg-base-200 sticky top-0 z-50 shadow-lg">
@@ -61,11 +31,11 @@ const Navbar = () => {
             <li>
               <Link to={"/"}>Home</Link>
             </li>
-            
+
             <li>
               <Link to={"/place/new"}>Add place</Link>
             </li>
-             
+
             <li>
               <Link to={"/"}>Contact</Link>
             </li>
@@ -84,7 +54,7 @@ const Navbar = () => {
             <Link to={"/"}>Home</Link>
           </li>
           <li>
-            <Link to={"/place/new"}>Add Place</Link>
+            <Link to={"/about"}>About</Link>
           </li>
           <li>
             <Link to={"/contact"}>Contact</Link>
@@ -92,12 +62,12 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        {isLoggedIn && user ? (
+        {user ? (
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button">
               <div className="avatar">
                 <div className="w-12 rounded-full overflow-hidden">
-                  <img src={user?.profileImg}  />
+                  <img src={user?.profileImg} />
                 </div>
               </div>
             </div>
@@ -105,8 +75,13 @@ const Navbar = () => {
               tabIndex={0}
               className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
             >
+              {user.role === "admin" && (
+                <li>
+                  <a>Add Place</a>
+                </li>
+              )}
               <li>
-                <a>{user.email}</a>
+                <Link to={"/profile"}>Your Profile</Link>
               </li>
               <li onClick={logout}>
                 <span>Logout</span>
