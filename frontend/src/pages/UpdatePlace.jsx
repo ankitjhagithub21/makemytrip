@@ -6,11 +6,10 @@ import { useNavigate } from "react-router-dom";
 import NotFound from "./NotFound";
 
 const UpdatePlace = () => {
-    
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { user,currPlace } = useSelector((state) => state.user);
-  
+  const { user, currPlace } = useSelector((state) => state.user);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (loading) return;
@@ -23,8 +22,8 @@ const UpdatePlace = () => {
 
     setLoading(true); // Set loading to true
     try {
-      const data = await updatePlace(currPlace?._id,formEntries); 
-      toast.success("Place updated.")
+      const data = await updatePlace(currPlace?._id, formEntries);
+      toast.success("Place updated.");
       navigate(`/place/${currPlace._id}`); // Navigate to the home page
     } catch (error) {
       toast.error(error.response?.data?.message || "An error occurred");
@@ -34,14 +33,19 @@ const UpdatePlace = () => {
     }
   };
 
-  if(!currPlace){
-    return <NotFound/>
+  if (!currPlace) {
+    return <NotFound />;
   }
 
   return (
     <div className="auth min-h-screen px-5 flex items-center justify-center">
       <div className="max-w-2xl mx-auto w-full bg-white my-24 px-5 py-8 border rounded-lg shadow-lg">
-        <h1 className="text-2xl font-bold mb-6">Update Place</h1>
+        <div className="flex justify-between items-center mb-5">
+          <h1 className="text-2xl font-bold">Update Place</h1>
+          <button className="btn btn-success" onClick={() => navigate(-1)}>
+            Back
+          </button>
+        </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <div>

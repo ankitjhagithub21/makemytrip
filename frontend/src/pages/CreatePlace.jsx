@@ -36,7 +36,10 @@ const CreatePlace = ({ updatePlaces }) => {
   return (
     <div className="auth min-h-screen px-5 flex items-center justify-center">
       <div className="max-w-2xl mx-auto w-full bg-white my-24 px-5 py-8 border rounded-lg shadow-lg">
-        <h1 className="text-2xl font-bold mb-6">Create a New Place</h1>
+       <div className="flex justify-between items-center mb-5">
+       <h1 className="text-2xl font-bold">Add New Place</h1>
+       <button className="btn btn-success" onClick={()=>navigate(-1)}>Back</button>
+       </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <div>

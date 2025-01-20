@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import PlaceCard from "../components/PlaceCard";
 import HomePageLoading from "../components/HomePageLoading";
-
 const Home = ({ data, loading, error }) => {
   const navigate = useNavigate();
    
