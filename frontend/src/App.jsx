@@ -16,6 +16,8 @@ import ScrollToTop from './components/ScrollToTop';
 import { setIsLoggedIn, setUser } from './redux/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, logoutUser } from './api/user';
+import About from './pages/About';
+import Profile from './pages/Profile';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -69,6 +71,8 @@ const App = () => {
       <Routes>
         {/* Home Route */}
         <Route path="/" element={<Home data={data || []} loading={loading} error={error} />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/profile" element={<Profile />} />
 
         {/* Place Details Route */}
         <Route exact path="/place/:id" element={<Place deletePlace={deletePlace} />} />

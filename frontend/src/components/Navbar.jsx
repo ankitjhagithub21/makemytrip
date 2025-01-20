@@ -33,11 +33,11 @@ const Navbar = ({logout,user}) => {
             </li>
 
             <li>
-              <Link to={"/place/new"}>Add place</Link>
+              <Link to={"/about"}>About</Link>
             </li>
 
             <li>
-              <Link to={"/"}>Contact</Link>
+              <Link to={"/contact"}>Contact</Link>
             </li>
           </ul>
         </div>
