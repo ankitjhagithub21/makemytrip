@@ -1,36 +1,55 @@
-import React from 'react'
-import "./App.css"
-import {BrowserRouter,Routes,Route} from "react-router-dom"
-import Navbar from './components/Navbar'
-import Home from './pages/Home'
-import Place from './pages/Place'
-import Signup from './pages/Signup'
-import Login from './pages/Login'
-import Footer from './components/Footer'
-import useFetch from './hooks/useFetch'
-import NotFound from './pages/NotFound'
-import {Toaster} from 'react-hot-toast'
-import CreatePlace from './pages/CreatePlace'
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import Place from './pages/Place';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import NotFound from './pages/NotFound';
+import CreatePlace from './pages/CreatePlace';
+import useFetch from './hooks/useFetch';
+import './App.css';
 
 const App = () => {
-  const [data,loading,error] = useFetch(`${import.meta.env.VITE_SERVER_URL}/api/places`);
+  const [data, setData, loading, error] = useFetch(`${import.meta.env.VITE_SERVER_URL}/api/places`);
+
+  // Add a new place to the state
+  const updatePlaces = (newPlace) => {
+    setData((prev) => [...prev, newPlace]);
+  };
+
+  // Delete a place from the state
+  const deletePlace = (placeId) => {
+    const updatedPlaces = data.filter((place) => place._id !== placeId);
+    setData(updatedPlaces);
+  };
 
   return (
     <BrowserRouter>
-    <Toaster/>
-    <Navbar/>
-    <Routes>
-      <Route path='/' element={<Home data={data} loading={loading} error={error}/>}/>
-      <Route path='/place/:id' element={<Place/>}/>
-      <Route path='/place/new' element={<CreatePlace/>}/>
-      <Route path='/signup' element={<Signup/>}/>
-      <Route path='/login' element={<Login/>}/>
-      <Route path='*' element={<NotFound/>}/>
-    </Routes>
-    
-    <Footer/>
-    </BrowserRouter>
-  )
-}
+      <Toaster />
+      <Navbar />
+      <Routes>
+        {/* Home Route */}
+        <Route path="/" element={<Home data={data || []} loading={loading} error={error} />} />
 
-export default App
+        {/* Place Details Route */}
+        <Route path="/place/:id" element={<Place deletePlace={deletePlace} />} />
+
+        {/* Create New Place Route */}
+        <Route path="/place/new" element={<CreatePlace updatePlaces={updatePlaces} />} />
+
+        {/* User Authentication Routes */}
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+
+        {/* Fallback Not Found Route */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
+  );
+};
+
+export default App;

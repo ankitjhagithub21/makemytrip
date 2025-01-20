@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { deleteReview } from "../api/review";
 import NotFound from "./NotFound";
 
-const Place = () => {
+const Place = ({deletePlace}) => {
   const { id } = useParams();
   const [place, setPlace] = useState(null);
   const [error, setError] = useState(null);
@@ -53,6 +53,7 @@ const Place = () => {
 
     try{
       const data = await removePlace(placeId)
+      deletePlace(placeId);
       toast.success(data.message)
       navigate("/")
 
@@ -75,6 +76,9 @@ const Place = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-5 my-12">
+      <button onClick={()=>navigate(-1)} className="btn btn-success">
+        
+        Back</button>
       {place && <PlaceDetails place={place} deletePlace={handleDeletePlace}/>}
 
       <hr />

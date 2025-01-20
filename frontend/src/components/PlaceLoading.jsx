@@ -4,6 +4,7 @@ const PlaceLoading = () => {
   return (
     <div className="max-w-6xl mx-auto px-5 py-12 flex flex-col gap-3 animate-pulse">
       {/* Title Skeleton */}
+      <button className="btn bg-gray-300 w-20"></button>
       <div className="h-8 bg-gray-300 rounded w-3/4"></div>
 
       {/* Image Skeleton */}
