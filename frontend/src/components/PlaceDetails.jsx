@@ -1,12 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdEdit } from "react-icons/md";
 import { setCurrPlace } from "../redux/slices/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const PlaceDetails = ({ place, deletePlace }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const {user} = useSelector(state=>state.user)
   const handleDelete = () => {
+    if(user?.role !=="admin"){
+       return toast.error("You are not an admin.")
+    }
     if (confirm("Are you sure ?")) {
       deletePlace(place._id);
     }
@@ -33,8 +38,8 @@ const PlaceDetails = ({ place, deletePlace }) => {
         <button className="btn btn-error text-white" onClick={handleDelete}>
           <MdDelete size={20}/>
         </button>
-      <button className="btn btn-info" onClick={handleUpdate}>
-      Update
+      <button className="btn btn-info text-white" onClick={handleUpdate}>
+      <MdEdit size={20}/>
       </button>
       </div>
     </div>

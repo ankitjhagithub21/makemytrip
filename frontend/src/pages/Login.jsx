@@ -21,12 +21,12 @@ const Login = () => {
     try{
       const data = await login(formObject)
 
-     if(data.success){
+     
       dispatch(setIsLoggedIn(true))
+      toast.success(data.message)
       e.target.reset()
-      toast.success("Login successfull.")
       navigate("/")
-     }
+     
     
     }catch(error){
       setError(error.response.data.message)
@@ -44,7 +44,7 @@ const Login = () => {
     try{
       const data = await login(demo)
       dispatch(setIsLoggedIn(true))
-      toast.success("Login successfull.")
+      toast.success(data.message)
       navigate("/")
     }catch(error){
       setError(error.response.data.message)

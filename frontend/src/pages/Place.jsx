@@ -37,10 +37,12 @@ const Place = ({deletePlace}) => {
   const addNewReview = (newReview) => {
       setReviews((prev)=>[...prev,newReview])
   }
+
   const handleDeleteReview = async(reviewId) =>{
     if(!user){
       return toast.error("You are not logged in.")
     }
+    
 
     try{
       const data = await deleteReview(reviewId,place?._id)
@@ -56,6 +58,10 @@ const Place = ({deletePlace}) => {
       return toast.error("You are not logged in.")
     }
 
+    if(user.role !== "admin"){
+      return toast.error("Only admin can delete place.")
+    }
+
     try{
       const data = await removePlace(placeId)
       deletePlace(placeId);
@@ -63,8 +69,8 @@ const Place = ({deletePlace}) => {
       navigate("/")
 
     }catch(error){
-      console.log(error)
-      toast.error(error.message)
+      
+      toast.error(error.response.data.message)
     }
   }
 

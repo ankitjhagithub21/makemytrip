@@ -10,7 +10,7 @@ const Navbar = () => {
   const dispatch = useDispatch()
   
   useEffect(()=>{
-    const fetchUser = async() =>{
+   const fetchUser = async() =>{
       try{
        const data = await getUser();
        dispatch(setIsLoggedIn(true))
@@ -20,13 +20,16 @@ const Navbar = () => {
         dispatch(setIsLoggedIn(false))
       }
    }
-   fetchUser()
+   if(isLoggedIn){
+    fetchUser()
+   }
   },[isLoggedIn])
 
   const logout = () => {
      try{
       const res = logoutUser();
         dispatch(setIsLoggedIn(false))
+        dispatch(setUser(null))
         toast.success("Logout successfull.")
      }catch(error){
        console.log(error)

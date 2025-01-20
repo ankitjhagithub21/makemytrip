@@ -13,7 +13,7 @@ export const userSlice = createSlice({
    
     setIsLoggedIn: (state, action) => {
       state.isLoggedIn = action.payload
-      state.user = null;
+      
     },
     setUser: (state, action) => {
       state.user = action.payload
