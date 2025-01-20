@@ -15,7 +15,7 @@ import UpdatePlace from './pages/UpdatePlace';
 import ScrollToTop from './components/ScrollToTop';
 import { setIsLoggedIn, setUser } from './redux/slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from './api/user';
+import { getUser, logoutUser } from './api/user';
 
 const App = () => {
   const dispatch = useDispatch();

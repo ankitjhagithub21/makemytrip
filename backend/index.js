@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 
 app.use("/api/places",placeRouter)
 app.use("/api/users",userRouter)
-app.use("/api/places/:placeId/reviews",reviewRouter)
+app.use("/api/reviews",reviewRouter)
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`)
