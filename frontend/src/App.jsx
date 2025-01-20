@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUser, logoutUser } from './api/user';
 import About from './pages/About';
 import Profile from './pages/Profile';
+import Contact from './pages/Contact';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -73,6 +74,7 @@ const App = () => {
         <Route path="/" element={<Home data={data || []} loading={loading} error={error} />} />
         <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/contact" element={<Contact />} />
 
         {/* Place Details Route */}
         <Route exact path="/place/:id" element={<Place deletePlace={deletePlace} />} />

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
+import UpdateProfile from '../components/UpdateProfile'
 
 const Profile = () => {
     const { user } = useSelector(state => state.user)
@@ -9,7 +10,8 @@ const Profile = () => {
     }
 
     return (
-        <section className="bg-gray-100 py-8">
+        <section className="h-[80vh] py-12 auth px-5">
+            <UpdateProfile/>
             <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg flex flex-col items-center justify-center space-y-4">
                 <h1 className="text-3xl font-semibold text-gray-800 text-center">Your Profile</h1>
 
@@ -29,7 +31,7 @@ const Profile = () => {
                 {/* Optional: Add more user details or actions */}
                 <div className="mt-6 text-center">
                     {/* Example: Edit Profile Button */}
-                    <button className="btn btn-success">
+                    <button className="btn btn-success" onClick={()=>document.getElementById('my_modal_1').showModal()}>
                         Edit Profile
                     </button>
                 </div>
