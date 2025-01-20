@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Navbar from './components/Navbar';
@@ -11,10 +11,11 @@ import NotFound from './pages/NotFound';
 import CreatePlace from './pages/CreatePlace';
 import useFetch from './hooks/useFetch';
 import './App.css';
+import UpdatePlace from './pages/UpdatePlace';
 
 const App = () => {
   const [data, setData, loading, error] = useFetch(`${import.meta.env.VITE_SERVER_URL}/api/places`);
-
+ 
   // Add a new place to the state
   const updatePlaces = (newPlace) => {
     setData((prev) => [...prev, newPlace]);
@@ -35,10 +36,13 @@ const App = () => {
         <Route path="/" element={<Home data={data || []} loading={loading} error={error} />} />
 
         {/* Place Details Route */}
-        <Route path="/place/:id" element={<Place deletePlace={deletePlace} />} />
+        <Route exact path="/place/:id" element={<Place deletePlace={deletePlace} />} />
 
         {/* Create New Place Route */}
-        <Route path="/place/new" element={<CreatePlace updatePlaces={updatePlaces} />} />
+        <Route exact path="/place/new" element={<CreatePlace updatePlaces={updatePlaces} />} />
+
+          {/* Update Place route */}
+        <Route exact path="/place/:id/edit" element={<UpdatePlace  />} />
 
         {/* User Authentication Routes */}
         <Route path="/signup" element={<Signup />} />

@@ -50,18 +50,32 @@ const getPlaceById = async (req, res) => {
 };
 
 const updatePlace = async (req, res) => {
+  const {title,description,image,location,country,price} = req.body;
   try {
-    const updatedPlace = await Place.findByIdAndUpdate(req.params.id, req.body);
+    if(!title || !description || !image || !location || !country || !price){
+      return res.status(400).json({message:"All fields are required."})
+    }
+
+    const updatedPlace = await Place.findByIdAndUpdate(req.params.id, {
+      title,
+      description,
+      image,
+      location,
+      country,
+      price
+    });
+
     if (!updatedPlace) {
       return res
         .status(404)
-        .json({ success: false, message: "Place not found." });
+        .json({ message: "Place not found." });
     }
-    res.status(200).json({ success: true, place:updatedPlace });
+
+    res.status(200).json({ place:updatedPlace });
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ success: false, message:"Server error"  });
+    res.status(500).json({ message:"Server error"  });
   }
 };
 
