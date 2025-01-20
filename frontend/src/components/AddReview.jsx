@@ -3,7 +3,7 @@ import { addReview } from "../api/review";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 
-const AddReview = ({ placeId }) => {
+const AddReview = ({ placeId,addNewReview }) => {
   const [loading, setLoading] = useState(false);
   const { user } = useSelector((state) => state.user);
 
@@ -16,6 +16,7 @@ const AddReview = ({ placeId }) => {
     setLoading(true);
     try {
       const data = await addReview(formObject, placeId);
+      addNewReview(data.review);
       toast.success("Review added.");
       e.target.reset();
     } catch (error) {

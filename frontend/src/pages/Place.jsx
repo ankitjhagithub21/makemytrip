@@ -13,6 +13,7 @@ import NotFound from "./NotFound";
 const Place = ({deletePlace}) => {
   const { id } = useParams();
   const [place, setPlace] = useState(null);
+  const [reviews,setReviews] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate()
@@ -23,6 +24,7 @@ const Place = ({deletePlace}) => {
       try {
         const data = await getPlaceById(id);
         setPlace(data);
+        setReviews(data.reviews)
       } catch (err) {
         setError(err.message);
       } finally {
@@ -32,6 +34,9 @@ const Place = ({deletePlace}) => {
     fetchPlaceData();
   }, [id]);
 
+  const addNewReview = (newReview) => {
+      setReviews((prev)=>[...prev,newReview])
+  }
   const handleDeleteReview = async(reviewId) =>{
     if(!user){
       return toast.error("You are not logged in.")
@@ -39,7 +44,7 @@ const Place = ({deletePlace}) => {
 
     try{
       const data = await deleteReview(reviewId,place?._id)
-
+      setReviews(reviews.filter((review)=>review._id !== reviewId))
       toast.success(data.message)
 
     }catch(error){
@@ -63,6 +68,8 @@ const Place = ({deletePlace}) => {
     }
   }
 
+  
+
 
   if (loading) {
     return <PlaceLoading />;
@@ -82,9 +89,9 @@ const Place = ({deletePlace}) => {
       {place && <PlaceDetails place={place} deletePlace={handleDeletePlace}/>}
 
       <hr />
-      <AddReview placeId={place._id}/>
-      {place.reviews && place.reviews.length > 0 ? (
-       <Reviews reviews={place.reviews} handleDelete={handleDeleteReview}/>
+      <AddReview placeId={place._id} addNewReview={addNewReview}/>
+      {reviews.length > 0 ? (
+       <Reviews reviews={reviews} handleDelete={handleDeleteReview}/>
       ) : (
         <p className="text-gray-500 text-center">No reviews yet.</p>
       )}
