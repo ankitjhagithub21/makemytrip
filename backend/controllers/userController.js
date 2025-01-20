@@ -2,6 +2,7 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const validator = require('validator');
 const generateToken = require("../utils/generateToken");
+const { uploadImage } = require("../utils/uploadImage");
 
 const signup = async (req, res) => {
   try {
@@ -17,6 +18,7 @@ const signup = async (req, res) => {
       return res.status(400).json({message: "User already exist." });
     }
 
+  
     if(fullName.trim().length<3){
         return res.status(400).json({message: "Full Name must be atleast 3 characters long." });   
     }
@@ -33,10 +35,18 @@ const signup = async (req, res) => {
     }
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    let result = null;
+
+   
+    if(req.file){
+        result = await uploadImage(req.file.path)
+    }
+
     const newUser = new User({
       fullName,
       email,
       password: hashedPassword,
+      profileImg: result ? result.secureUrl : "https://cdn-icons-png.flaticon.com/512/149/149071.png"
     });
 
     await newUser.save();
@@ -48,7 +58,16 @@ const signup = async (req, res) => {
       secure: true,
       sameSite: "none",
       maxAge: 3600000,
-    }).status(201).json({ message:"Account created." });
+    }).status(201).json({
+      success:true, 
+      message:"Account created.",
+      user:{
+        _id:newUser._id,
+        fullName:newUser.fullName,
+        email:newUser.email,
+        role:newUser.role,
+        profileImg:newUser.profileImg
+      }});
 
   } catch (error) {
     console.log(error)
@@ -83,7 +102,16 @@ const login = async (req, res) => {
       secure: true,
       sameSite: "none",
       maxAge: 3600000,
-    }).json({ message:`Welcome back ${userExist.fullName}`  });
+    }).json({ 
+      success:true,
+      message:`Welcome back ${userExist.fullName}`, 
+      user:{
+      _id:userExist._id,
+      fullName:userExist.fullName,
+      email:userExist.email,
+      role:userExist.role,
+      profileImg:userExist.profileImg
+    }});
 
   } catch (error) {
     res.status(500).json({ message:"Server error"  });

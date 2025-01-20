@@ -2,72 +2,68 @@ import React, { useState } from "react";
 import { login } from "../api/user";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setIsLoggedIn } from "../redux/slices/userSlice";
+import { setIsLoggedIn, setUser } from "../redux/slices/userSlice";
 import toast from "react-hot-toast";
 
-
 const Login = () => {
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
-  const [error,setError] = useState(null)
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formObject = Object.fromEntries(formData.entries());
-    setLoading(true)
-    try{
-      const data = await login(formObject)
+    setLoading(true);
+    try {
+      const data = await login(formObject);
 
-     
-      dispatch(setIsLoggedIn(true))
-      toast.success(data.message)
-      e.target.reset()
-      navigate("/")
-     
-    
-    }catch(error){
-      setError(error.response.data.message)
-    }finally{
-      setLoading(false)
+      if (data.success) {
+        dispatch(setIsLoggedIn(true));
+        dispatch(setUser(data.user));
+        toast.success(data.message);
+        e.target.reset();
+        navigate("/");
+      }
+    } catch (error) {
+      setError(error.response.data.message);
+    } finally {
+      setLoading(false);
     }
-
   };
-  const handleDemo = async() =>{
+  const handleDemo = async () => {
     const demo = {
-      email:"test@gmail.com",
-      password:"Test@123"
+      email: "test@gmail.com",
+      password: "Test@123",
+    };
+    setLoading(true);
+    try {
+      const data = await login(demo);
+      if (data.success) {
+        dispatch(setIsLoggedIn(true));
+        dispatch(setUser(data.user));
+        toast.success(data.message);
+        navigate("/");
+      }
+    } catch (error) {
+      setError(error.response.data.message);
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(true)
-    try{
-      const data = await login(demo)
-      dispatch(setIsLoggedIn(true))
-      toast.success(data.message)
-      navigate("/")
-    }catch(error){
-      setError(error.response.data.message)
-      console.log(error)
-    }finally{
-      setLoading(false)
-    }
-  }
+  };
 
   return (
-    <section
-      className="px-5 auth relative h-[80vh] flex items-center justify-center">
+    <section className="px-5 auth relative h-[80vh] flex items-center justify-center">
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-60"></div>
 
       <div className="max-w-sm  w-full bg-white p-5 rounded-2xl  shadow-2xl my-12 relative z-10">
         <h1 className="text-2xl font-semibold  mb-5">Login</h1>
-        {
-          error && <p className="text-red-500 mb-3">{error}</p>
-        }
+        {error && <p className="text-red-500 mb-3">{error}</p>}
         <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-         
-
           <label className="input input-success flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -110,21 +106,29 @@ const Login = () => {
           </label>
           <button
             disabled={loading}
-
             type="submit"
             className="btn btn-success text-gray-800"
           >
-            {
-              loading &&  <span className="loading loading-spinner"></span>
-            }
+            {loading && <span className="loading loading-spinner"></span>}
             Login
           </button>
         </form>
-        <p className="mt-3 text-sm text-center">Don't have an account ? <Link to={"/signup"} className="underline text-green-600">Signup</Link> </p>
-       <div className="text-center mt-2">
-       <p>or</p>
-       <button disabled={loading} className="btn btn-sm rounded-lg px-6 mt-2 btn-info text-white" onClick={handleDemo}>Use Demo Account</button>
-       </div>
+        <p className="mt-3 text-sm text-center">
+          Don't have an account ?{" "}
+          <Link to={"/signup"} className="underline text-green-600">
+            Signup
+          </Link>{" "}
+        </p>
+        <div className="text-center mt-2">
+          <p>or</p>
+          <button
+            disabled={loading}
+            className="btn btn-sm rounded-lg px-6 mt-2 btn-success"
+            onClick={handleDemo}
+          >
+            Use Demo Account
+          </button>
+        </div>
       </div>
     </section>
   );

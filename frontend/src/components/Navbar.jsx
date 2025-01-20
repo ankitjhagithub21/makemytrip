@@ -20,14 +20,12 @@ const Navbar = () => {
         dispatch(setIsLoggedIn(false))
       }
    }
-   if(isLoggedIn){
-    fetchUser()
-   }
-  },[isLoggedIn])
+   fetchUser()
+  },[])
 
   const logout = () => {
      try{
-      const res = logoutUser();
+        logoutUser();
         dispatch(setIsLoggedIn(false))
         dispatch(setUser(null))
         toast.success("Logout successfull.")
@@ -99,7 +97,7 @@ const Navbar = () => {
             <div tabIndex={0} role="button">
               <div className="avatar">
                 <div className="w-12 rounded-full overflow-hidden">
-                  <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                  <img src={user?.profileImg}  />
                 </div>
               </div>
             </div>

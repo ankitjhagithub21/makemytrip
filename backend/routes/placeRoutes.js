@@ -7,7 +7,7 @@ const {
   createPlace,
 } = require('../controllers/placeController');
 const isAuthenticated = require('../middlewares/isAuthenticated');
-const isAdmin = require('../utils/isAdmin');
+const isAdmin = require('../middlewares/isAdmin');
 
 const placeRouter = express.Router();
 

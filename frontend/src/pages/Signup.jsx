@@ -2,48 +2,50 @@ import React, { useState } from "react";
 import { signup } from "../api/user";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setIsLoggedIn } from "../redux/slices/userSlice";
-
+import { setIsLoggedIn, setUser } from "../redux/slices/userSlice";
+import toast from "react-hot-toast";
 
 const Signup = () => {
-  const [loading,setLoading] = useState(false)
-  const [error,setError] = useState(null)
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const formObject = Object.fromEntries(formData.entries());
-    setLoading(true)
-    try{
-      const data = await signup(formObject)
-
-     if(data.success){
-      dispatch(setIsLoggedIn(true))
-      e.target.reset()
-      navigate("/")
-     }
-    
-    }catch(error){
-      setError(error.response.data.message)
-    }finally{
-      setLoading(false)
+    const formData = new FormData();
+    formData.append("fullName", e.target.fullName.value);
+    formData.append("email", e.target.email.value);
+    formData.append("password", e.target.password.value);
+    if(e.target.profileImg){
+      formData.append("profileImg", e.target.profileImg.files[0]); 
     }
 
+    setLoading(true);
+    try {
+      const data = await signup(formData); // Call the signup API
+      if (data.success) {
+        dispatch(setIsLoggedIn(true)); 
+        dispatch(setUser(data.user))
+        toast.success(data.message)
+        e.target.reset(); // Reset the form
+        navigate("/"); // Navigate to home
+      }
+    } catch (error) {
+      setError(error.response?.data?.message || "An error occurred");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <section
-      className="px-5 auth relative h-[80vh] flex items-center justify-center">
+    <section className="px-5 auth relative h-[80vh] flex items-center justify-center">
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-60"></div>
 
-      <div className="max-w-sm  w-full bg-white p-5 rounded-2xl  shadow-2xl my-12 relative z-10">
-        <h1 className="text-2xl font-semibold  mb-5">Sign Up</h1>
-        {
-          error && <p className="text-red-500 mb-3">{error}</p>
-        }
+      <div className="max-w-sm w-full bg-white p-5 rounded-2xl shadow-2xl my-12 relative z-10">
+        <h1 className="text-2xl font-semibold mb-5">Sign Up</h1>
+        {error && <p className="text-red-500 mb-3">{error}</p>}
         <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
           <label className="input input-success flex items-center gap-2">
             <svg
@@ -103,19 +105,30 @@ const Signup = () => {
               required
             />
           </label>
+
+          <input
+            type="file"
+            className="file-input file-input-bordered file-input-success w-full"
+            placeholder="Upload profile image"
+            name="profileImg"
+            
+          />
+
           <button
             disabled={loading}
-
             type="submit"
             className="btn btn-success text-gray-800"
           >
-            {
-              loading &&  <span className="loading loading-spinner"></span>
-            }
+            {loading && <span className="loading loading-spinner"></span>}
             Create account
           </button>
         </form>
-        <p className="mt-3 text-sm text-center">Already have an account ? <Link to={"/login"} className="underline text-green-600">Login</Link> </p>
+        <p className="mt-3 text-sm text-center">
+          Already have an account?{" "}
+          <Link to={"/login"} className="underline text-green-600">
+            Login
+          </Link>
+        </p>
       </div>
     </section>
   );

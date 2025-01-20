@@ -20,6 +20,9 @@ const userSchema = new Schema({
     default:"user"
     
   },
+  profileImg:{
+    type:String,
+  }
  
 },{versionKey:false});
 

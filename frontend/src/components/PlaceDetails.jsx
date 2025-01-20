@@ -34,14 +34,16 @@ const PlaceDetails = ({ place, deletePlace }) => {
       <p className="text-green-600 text-2xl">₹ {place.price} / day</p>
 
 
-      <div className="flex gap-3 mt-4">
-        <button className="btn btn-error text-white" onClick={handleDelete}>
-          <MdDelete size={20}/>
-        </button>
-      <button className="btn btn-info text-white" onClick={handleUpdate}>
-      <MdEdit size={20}/>
+     {
+      user && user.role === "admin" &&  <div className="flex gap-3 mt-4">
+      <button className="btn btn-error text-white" onClick={handleDelete}>
+        <MdDelete size={20}/>
       </button>
-      </div>
+    <button className="btn btn-info text-white" onClick={handleUpdate}>
+    <MdEdit size={20}/>
+    </button>
+    </div>
+     }
     </div>
   );
 };
