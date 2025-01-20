@@ -3,10 +3,12 @@ import { login } from "../api/user";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setIsLoggedIn } from "../redux/slices/userSlice";
+import toast from "react-hot-toast";
 
 
 const Login = () => {
   const [loading,setLoading] = useState(false)
+
   const [error,setError] = useState(null)
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -22,6 +24,7 @@ const Login = () => {
      if(data.success){
       dispatch(setIsLoggedIn(true))
       e.target.reset()
+      toast.success("Login successfull.")
       navigate("/")
      }
     
@@ -32,6 +35,24 @@ const Login = () => {
     }
 
   };
+  const handleDemo = async() =>{
+    const demo = {
+      email:"test@gmail.com",
+      password:"Test@123"
+    }
+    setLoading(true)
+    try{
+      const data = await login(demo)
+      dispatch(setIsLoggedIn(true))
+      toast.success("Login successfull.")
+      navigate("/")
+    }catch(error){
+      setError(error.response.data.message)
+      console.log(error)
+    }finally{
+      setLoading(false)
+    }
+  }
 
   return (
     <section
@@ -100,6 +121,10 @@ const Login = () => {
           </button>
         </form>
         <p className="mt-3 text-sm text-center">Don't have an account ? <Link to={"/signup"} className="underline text-green-600">Signup</Link> </p>
+       <div className="text-center mt-2">
+       <p>or</p>
+       <button disabled={loading} className="btn btn-sm rounded-lg px-6 mt-2 btn-info text-white" onClick={handleDemo}>Use Demo Account</button>
+       </div>
       </div>
     </section>
   );

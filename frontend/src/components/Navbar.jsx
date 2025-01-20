@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { setIsLoggedIn, setUser } from "../redux/slices/userSlice";
 import { useEffect } from "react";
 import { getUser, logoutUser } from "../api/user";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const { isLoggedIn,user } = useSelector((state) => state.user);
@@ -14,6 +15,7 @@ const Navbar = () => {
        const data = await getUser();
        dispatch(setIsLoggedIn(true))
        dispatch(setUser(data))
+
       }catch(error){
         dispatch(setIsLoggedIn(false))
       }
@@ -25,7 +27,7 @@ const Navbar = () => {
      try{
       const res = logoutUser();
         dispatch(setIsLoggedIn(false))
-        
+        toast.success("Logout successfull.")
      }catch(error){
        console.log(error)
      }
