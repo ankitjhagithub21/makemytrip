@@ -12,6 +12,7 @@ import CreatePlace from './pages/CreatePlace';
 import useFetch from './hooks/useFetch';
 import './App.css';
 import UpdatePlace from './pages/UpdatePlace';
+import ScrollToTop from './components/ScrollToTop';
 
 const App = () => {
   const [data, setData, loading, error] = useFetch(`${import.meta.env.VITE_SERVER_URL}/api/places`);
@@ -29,6 +30,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
+     <ScrollToTop>
       <Toaster />
       <Navbar />
       <Routes>
@@ -51,7 +53,9 @@ const App = () => {
         {/* Fallback Not Found Route */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      
       <Footer />
+      </ScrollToTop>
     </BrowserRouter>
   );
 };
