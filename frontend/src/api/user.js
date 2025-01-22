@@ -34,6 +34,12 @@ export const changeName = async(fullName) => {
     return data;
 }
 
+export const changePassword = async(userData) => {
+    const {data} = await axios.put(`${baseUrl}/change-password`,userData)
+    return data;
+}
+
+
 
 
 

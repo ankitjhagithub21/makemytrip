@@ -222,11 +222,68 @@ const changeName = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  
+  const { oldPassword,newPassword } = req.body;
+
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized." });
+    }
+
+    if (!oldPassword || !newPassword) {
+      return res
+        .status(400)
+        .json({ message: "All fields are required." });
+    }
+    
+    if(!validator.isStrongPassword(newPassword)){
+      return res
+      .status(400)
+      .json({
+        message:
+          "Password must be 8 characters long with 1 upper case letter and 1 special character.",
+      });
+    }
+
+    if(oldPassword === newPassword){
+      return res
+      .status(400)
+      .json({
+        message:
+         "Old Password and new password is same.",
+      });
+    }
+
+    const isValidPassword = await bcrypt.compare(oldPassword,user.password);
+
+    if(!isValidPassword){
+      return res.status(400).json({ message: "Old password is incorrect." });
+    }
+
+
+    const updatedPassword = await bcrypt.hash(newPassword,10);
+
+
+    user.password = updatedPassword;
+    await user.save();
+    return res
+      .status(200)
+      .json({message:"Your password is changed successully."});
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   signup,
   login,
   logout,
   getUser,
   changeProfileImage,
-  changeName
+  changeName,
+  changePassword
 };
