@@ -35,8 +35,12 @@ const App = () => {
     const updatedPlaces = data.filter((place) => place._id !== placeId);
     setData(updatedPlaces);
   };
- 
- 
+
+  
+  const likeUnlike = (placeId, updatedPlace) =>{
+    setData(data.map((place) => place._id == placeId ? updatedPlace : place ))
+    
+  }
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -71,7 +75,7 @@ const App = () => {
       <Navbar user={user} logout={logout}/>
       <Routes>
         {/* Home Route */}
-        <Route path="/" element={<Home data={data || []} loading={loading} error={error} />} />
+        <Route path="/" element={<Home data={data || []} loading={loading} error={error} likeUnlike={likeUnlike}/>} />
         <Route path="/about" element={<About />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/contact" element={<Contact />} />

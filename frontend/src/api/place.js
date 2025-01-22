@@ -21,3 +21,8 @@ export const getPlaceById = async(placeId) => {
     const {data} = await axios.get(`${baseUrl}/${placeId}`)
     return data;
 }
+
+export const likeUnlikePlace = async(placeId) => { 
+    const {data} = await axios.post(`${baseUrl}/${placeId}/like`)
+    return data;
+}

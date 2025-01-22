@@ -1,16 +1,15 @@
-import { useNavigate } from "react-router-dom";
 import PlaceCard from "../components/PlaceCard";
 import HomePageLoading from "../components/HomePageLoading";
-const Home = ({ data, loading, error }) => {
-  const navigate = useNavigate();
-   
-  const handleClick = (placeId) => {
-    navigate(`/place/${placeId}`);
-  };
 
+const Home = ({ data, loading, error,likeUnlike }) => {
+  
+  
+  
   if (error) {
     return <div>Error: {error}</div>;
   }
+
+
 
   return (
     <div className="max-w-6xl mx-auto py-24 px-5">
@@ -18,7 +17,7 @@ const Home = ({ data, loading, error }) => {
         {loading
           ? <HomePageLoading />
           : data.map((place)=>{
-            return <PlaceCard key={place._id} place={place} handleClick={handleClick}/>
+            return <PlaceCard key={place._id} place={place} likeUnlike={likeUnlike}/>
           })
           
           }

@@ -29,9 +29,20 @@ const placeSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "Review",
+      default:[]
     },
+
   ],
-});
+  likes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      default:[]
+    },
+
+  ],
+  
+},{versionKey:false});
 
 // Hook to delete associated reviews when a Place is deleted
 placeSchema.post("findOneAndDelete", async function (place) {

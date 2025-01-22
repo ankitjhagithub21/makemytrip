@@ -5,6 +5,7 @@ const {
   updatePlace,
   deletePlace,
   createPlace,
+  likeUnlikePlace,
 } = require('../controllers/placeController');
 const isAuthenticated = require('../middlewares/isAuthenticated');
 const isAdmin = require('../middlewares/isAdmin');
@@ -25,5 +26,8 @@ placeRouter.put('/:id', isAuthenticated, isAdmin, updatePlace);
 
 // Route to delete place
 placeRouter.delete('/:id', isAuthenticated, isAdmin, deletePlace);
+
+//Route to like/unlike place
+placeRouter.post('/:id/like', isAuthenticated, likeUnlikePlace);
 
 module.exports = placeRouter;

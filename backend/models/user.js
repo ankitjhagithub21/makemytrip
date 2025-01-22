@@ -22,7 +22,14 @@ const userSchema = new Schema({
   },
   profileImg:{
     type:String,
-  }
+  },
+  favs:[
+     {
+      type:Schema.Types.ObjectId,
+      ref:"Place",
+      default:[]
+     }
+  ]
  
 },{versionKey:false});
 
