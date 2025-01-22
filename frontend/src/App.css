@@ -4,6 +4,9 @@
     font-family: "Noto Sans", serif;
    
 }
+html{
+    scroll-behavior: smooth;
+}
 .auth{
     background-image: url("/bg.jpg");
     background-size: cover;

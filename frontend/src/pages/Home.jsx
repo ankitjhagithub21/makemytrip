@@ -12,7 +12,7 @@ const Home = ({ data, loading, error,likeUnlike }) => {
 
 
   return (
-    <div className="max-w-6xl mx-auto py-24 px-5">
+    <div className="max-w-6xl mx-auto min-h-screen py-24 px-5">
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-12">
         {loading
           ? <HomePageLoading />

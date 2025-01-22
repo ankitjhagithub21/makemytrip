@@ -1,20 +1,13 @@
-import { useSelector } from 'react-redux'
-import { Navigate } from 'react-router-dom'
 import { MdEdit } from 'react-icons/md'
 import UpdateProfile from '../components/UpdateProfile'
 import UpdateName from '../components/UpdateName'
 import ChangePassword from '../components/ChangePassword'
+import { useSelector } from 'react-redux'
 
 
 const Profile = () => {
-    const { user } = useSelector(state => state.user)
-
-
-    if (!user) {
-        return <Navigate to={"/"} />
-    }
-
-
+   
+  const {user} = useSelector(state=>state.user)
     return (
         <section className="py-24 min-h-screen  px-5">
             <UpdateProfile user={user} />
@@ -24,12 +17,12 @@ const Profile = () => {
                 <h1 className="text-3xl font-semibold text-gray-800 text-center">Your Profile</h1>
 
                 {/* Profile Image */}
-
+       
                 <div className='relative'>
                     <img
                         src={user.profileImg}
                         alt="Profile"
-                        className="rounded-full w-32 h-32 object-cover border-4 border-success shadow-md"
+                        className="rounded-full  w-32 h-32 object-cover border-4 border-success shadow-md"
                     />
                     <button className='btn rounded-full btn-sm absolute bottom-2   right-0' onClick={() => document.getElementById('my_modal_1').showModal()}>
                         <MdEdit />
