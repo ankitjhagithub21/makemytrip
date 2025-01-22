@@ -4,7 +4,7 @@ import SocialMedia from './SocialMedia'
 const Footer = () => {
   return (
     <div className='bg-gray-200 '>
-      <footer className="footer  md:px-10 px-5 py-10 grid grid-cols-2 container mx-auto">
+      <footer className="footer   px-5 py-10 grid grid-cols-2 container mx-auto">
         <nav>
           <h6 className="footer-title">Services</h6>
           <a className="link link-hover">Branding</a>
@@ -26,7 +26,7 @@ const Footer = () => {
           <a className="link link-hover">Cookie policy</a>
         </nav>
       </footer>
-      <footer className="flex items-center flex-wrap gap-5 justify-between bg-base-200 text-base-content border-base-300 border-t md:px-10 px-5 py-5">
+      <footer className="flex md:flex-row flex-col md:items-center   gap-5 justify-between bg-base-200 text-base-content border-base-300 border-t md:px-10 px-5 py-5">
         <div className="flex items-center gap-2">
           <img src="./vite.svg" alt="logo" width={40}/>
           <p className='text-sm'>
@@ -35,7 +35,7 @@ const Footer = () => {
             Developed By <a href="https://ankitjha.vercel.app" target='_blank' className='text-blue-600 underline'>Ankit Jha</a>
           </p>
         </div>
-       <div className='flex items-center  text-2xl gap-3'>
+       <div className='md:flex items-center hidden   text-2xl gap-3'>
        <SocialMedia/>
        </div>
       </footer>

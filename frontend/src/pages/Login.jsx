@@ -23,9 +23,9 @@ const Login = () => {
       if (data.success) {
         dispatch(setIsLoggedIn(true));
         dispatch(setUser(data.user));
-        toast.success(data.message);
-        e.target.reset();
         navigate("/");
+        toast.success(data.message);
+       
       }
     } catch (error) {
       setError(error.response.data.message);

@@ -15,10 +15,8 @@ const Profile = () => {
     }
 
 
-
-
     return (
-        <section className="h-[80vh] py-12 auth px-5">
+        <section className="py-24 min-h-screen  px-5">
             <UpdateProfile user={user} />
             <UpdateName user={user} />
             <ChangePassword />

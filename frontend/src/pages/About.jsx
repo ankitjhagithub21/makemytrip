@@ -2,8 +2,8 @@ import SocialMedia from "../components/SocialMedia";
 
 const About = () => {
   return (
-    <section className='auth py-20 px-5'>
-      <div className="max-w-6xl mx-auto bg-white px-5 py-12 rounded-2xl shadow-2xl w-full">
+    <section className=' py-20 px-5'>
+      <div className="max-w-6xl mx-auto border rounded-xl px-5 py-12 w-full">
         <div className="text-center mb-8">
           <h1 className="lg:text-4xl text-2xl font-bold text-gray-800 mb-4">About this Project</h1>
           <p className="text-lg text-gray-600">
