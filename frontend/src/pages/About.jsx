@@ -1,5 +1,4 @@
-import React from 'react';
-import { FaGithub, FaLinkedin, FaFacebook } from 'react-icons/fa'; // Importing icons from React Icons
+import SocialMedia from "../components/SocialMedia";
 
 const About = () => {
   return (
@@ -30,23 +29,10 @@ const About = () => {
           <p className="text-lg text-gray-600 mb-4">
             This project was created by Ankit Jha, a passionate developer striving to build impactful and user-friendly web applications.
           </p>
-
           <div className="flex justify-center space-x-6 text-3xl text-gray-600">
-            {/* GitHub Icon */}
-            <a href="https://github.com/ankitjhagithub21" target="_blank" rel="noopener noreferrer">
-              <FaGithub className="hover:text-black" />
-            </a>
-
-            {/* LinkedIn Icon */}
-            <a href="https://www.linkedin.com/in/ankitjha3731" target="_blank" rel="noopener noreferrer">
-              <FaLinkedin className="hover:text-blue-700" />
-            </a>
-
-            {/* Facebook Icon */}
-            <a href="https://facebook.com/ankitjha2018" target="_blank" rel="noopener noreferrer">
-              <FaFacebook className="hover:text-blue-400" />
-            </a>
+            <SocialMedia />
           </div>
+
         </div>
       </div>
     </section>
