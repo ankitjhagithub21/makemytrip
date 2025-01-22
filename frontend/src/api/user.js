@@ -24,5 +24,17 @@ export const getUser = async() => {
     return data;
 }
 
+export const changeProfileImage = async(formData) => {
+    const {data} = await axios.put(`${baseUrl}/change-profile-image`,formData)
+    return data;
+}
+
+export const changeName = async(fullName) => {
+    const {data} = await axios.put(`${baseUrl}/change-name`,{fullName})
+    return data;
+}
+
+
+
 
 

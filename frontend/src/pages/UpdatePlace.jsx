@@ -8,7 +8,7 @@ import NotFound from "./NotFound";
 const UpdatePlace = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { user, currPlace } = useSelector((state) => state.user);
+  const { user, currPlace } = useSelector((state) => state.place);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

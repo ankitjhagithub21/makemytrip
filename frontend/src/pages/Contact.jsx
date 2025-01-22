@@ -16,7 +16,7 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
         
-    toast.error("Your message is sent infofully.")
+    toast.error("Your message is sent successfully.")
     setFormData(initialData)
   };
 

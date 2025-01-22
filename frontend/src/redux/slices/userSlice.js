@@ -6,7 +6,7 @@ export const userSlice = createSlice({
   initialState:{
      isLoggedIn:false,
      user:null,
-     currPlace:null
+     
   },
   
   reducers: {
@@ -18,13 +18,11 @@ export const userSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload
     },
-    setCurrPlace: (state, action) => {
-      state.currPlace = action.payload
-    },
+   
   },
 })
 
 
-export const { setIsLoggedIn,setUser,setCurrPlace } = userSlice.actions
+export const { setIsLoggedIn,setUser} = userSlice.actions
 
 export default userSlice.reducer

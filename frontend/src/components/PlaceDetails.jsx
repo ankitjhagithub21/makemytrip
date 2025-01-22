@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { MdDelete, MdEdit } from "react-icons/md";
-import { setCurrPlace } from "../redux/slices/userSlice";
+import { setCurrPlace } from "../redux/slices/placeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 

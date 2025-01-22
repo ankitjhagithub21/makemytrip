@@ -23,7 +23,7 @@ import Contact from './pages/Contact';
 const App = () => {
   const dispatch = useDispatch();
   const [data, setData, loading, error] = useFetch(`${import.meta.env.VITE_SERVER_URL}/api/places`);
-  const { isLoggedIn, user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
 
   // Add a new place to the state
   const updatePlaces = (newPlace) => {
