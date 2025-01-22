@@ -9,6 +9,9 @@ import { likeUnlikePlace } from '../api/place'
 const PlaceCard = ({place,likeUnlike}) => {
   const {user} = useSelector(state=>state.user)
   const handleLikeUnlike = async() => {
+    if(!user){
+      return toast.error("You are not logged in.")
+    }
       try{
         const data = await likeUnlikePlace(place._id);
         likeUnlike(place._id, data.place);
