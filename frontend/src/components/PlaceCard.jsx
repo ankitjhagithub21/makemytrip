@@ -43,9 +43,10 @@ const PlaceCard = ({place,likeUnlike}) => {
       <Link to={`/place/${place._id}`} className='hover:underline text-blue-700'>
         {place.title}, {place.location}
       </Link>
-      <p className="text-gray-800 text-2xl font-semibold">
-        ₹{place.price}
+      <p className="text-green-600 text-lg font-semibold">
+        ₹{place.price} / day
       </p>
+      <p>{place.likes.length} likes</p>
     </div>
   </div>
   )
