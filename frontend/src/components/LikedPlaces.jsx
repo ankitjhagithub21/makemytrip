@@ -1,26 +1,47 @@
-import React from 'react'
-import useFetch from '../hooks/useFetch'
+
+import { useEffect, useState } from 'react'
 import PlaceCard from './PlaceCard'
+import { getUserLikedPlaces } from '../api/user';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPlaces } from '../redux/slices/placeSlice';
 
-const LikedPlaces = ({likeUnlke}) => {
-  const url = `${import.meta.env.VITE_SERVER_URL}/api/users/liked-places`
-  const [data,setData,loading,error] = useFetch(url)
+const LikedPlaces = () => {
 
-  if(loading){
+  const [loading, setLoading] = useState(true);
+ 
+   const {places} = useSelector(state=>state.place)
+   const dispatch = useDispatch()
+  useEffect(() => {
+    const fetchData = async () => {
+
+      try {
+        const data = await getUserLikedPlaces();
+        dispatch(setPlaces(data.places))
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [])
+
+  if (loading) {
     return <p>Loading...</p>
   }
-  if(error){
-    return <p>Something went wrong</p>
-  }
+
 
   return (
-    <div className='lg:w-3/4 w-full my-10 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5'>
+    <div className='w-full max-w-6xl mx-auto mb-10'>
+      <h1 className='text-xl font-semibold mb-5'>Your Liked Places</h1>
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
       {
-      
-      data.places.map((place)=>{
-        return <PlaceCard key={place._id} place={place} likeUnlike={likeUnlke}/>
-      })  
-    }</div>
+         places.map((place) => {
+          return <PlaceCard key={place._id} place={place} />
+        })
+      }
+      </div>
+      </div>
   )
 }
 

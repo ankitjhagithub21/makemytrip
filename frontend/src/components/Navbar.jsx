@@ -2,39 +2,40 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getUser, logoutUser } from "../api/user";
-import { setIsLoading,  setUser } from "../redux/slices/userSlice";
-import { useEffect } from "react";
-
+import { setIsLoading, setUser } from "../redux/slices/userSlice";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
- const dispatch = useDispatch()
- const {user} = useSelector(state=>state.user)
-  const logout = async() => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+  const [active, setActive] = useState(0); // Track active link index
+
+  const logout = async () => {
     try {
       await logoutUser();
       dispatch(setUser(null));
-      toast.success("Logout successfull.");
+      toast.success("Logout successful.");
     } catch (error) {
       console.log(error.response.data.message);
     }
   };
 
-
   useEffect(() => {
     const fetchUser = async () => {
-
       try {
-        dispatch(setIsLoading(true))
+        dispatch(setIsLoading(true));
         const data = await getUser();
         dispatch(setUser(data));
       } catch (error) {
-        dispatch(setUser(null))
+        dispatch(setUser(null));
       } finally {
-        dispatch(setIsLoading(false))
+        dispatch(setIsLoading(false));
       }
     };
     fetchUser();
   }, []);
+
+  const links = ["Home", "About", "Contact"];
 
   return (
     <div className="navbar bg-base-200 sticky top-0 z-50 shadow-lg">
@@ -58,19 +59,19 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 gap-2 rounded-box  z-[1] mt-3 w-52 p-2 shadow"
           >
-            <li>
-              <Link to={"/"}>Home</Link>
-            </li>
-
-            <li>
-              <Link to={"/about"}>About</Link>
-            </li>
-
-            <li>
-              <Link to={"/contact"}>Contact</Link>
-            </li>
+            {links.map((link, idx) => (
+              <li key={idx}>
+                <Link
+                  to={`/${idx === 0 ? '': link.toLowerCase() }`}
+                  onClick={() => setActive(idx)} // Set active index on click
+                  className={active === idx ? "bg-gray-300" : ""}
+                >
+                  {link}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
         <Link
@@ -82,15 +83,17 @@ const Navbar = () => {
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li>
-            <Link to={"/"}>Home</Link>
-          </li>
-          <li>
-            <Link to={"/about"}>About</Link>
-          </li>
-          <li>
-            <Link to={"/contact"}>Contact</Link>
-          </li>
+        {links.map((link, idx) => (
+              <li key={idx}>
+                <Link
+                  to={`/${idx === 0 ? '': link.toLowerCase() }`}
+                  onClick={() => setActive(idx)} // Set active index on click
+                  className={active === idx ? "bg-gray-300" : ""}
+                >
+                  {link}
+                </Link>
+              </li>
+            ))}
         </ul>
       </div>
       <div className="navbar-end">
@@ -99,7 +102,7 @@ const Navbar = () => {
             <div tabIndex={0} role="button">
               <div className="avatar">
                 <div className="w-12 rounded-full overflow-hidden">
-                  <img src={user?.profileImg} />
+                  <img src={user?.profileImg} alt="User Avatar" />
                 </div>
               </div>
             </div>
