@@ -65,7 +65,7 @@ const Signup = () => {
         <h1 className="text-2xl font-semibold mb-5">Sign Up</h1>
         {error && <p className="text-red-500 mb-3">{error}</p>}
         <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-          <div className='bg-gray-200 w-28 h-28 rounded-full mx-auto overflow-hidden flex items-center justify-center'>
+          <div className=' w-28 h-28 rounded-full mx-auto overflow-hidden flex items-center justify-center'>
             <label htmlFor="profilePic">
               {profilePreview ? (
                 <img

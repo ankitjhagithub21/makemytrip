@@ -29,6 +29,12 @@ export const changeProfileImage = async(formData) => {
     return data;
 }
 
+export const deleteProfileImage = async() => {
+    const {data} = await axios.delete(`${baseUrl}/delete-profile-image`)
+    return data;
+}
+
+
 export const changeName = async(fullName) => {
     const {data} = await axios.put(`${baseUrl}/change-name`,{fullName})
     return data;

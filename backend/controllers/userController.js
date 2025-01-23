@@ -198,6 +198,29 @@ const changeProfileImage = async (req, res) => {
   }
 };
 
+const deleteProfileImage = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized." });
+    }
+  
+      //delete previous image of user
+      const publicId = getPublicId(user.profileImg);
+      await deleteImage(publicId);
+
+    user.profileImg = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+    await user.save();
+  
+    
+    return res
+      .status(200)
+      .json({ message: "Profile photo deleted.", url: user.profileImg });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const changeName = async (req, res) => {
   const { fullName } = req.body;
   try {
@@ -406,5 +429,6 @@ module.exports = {
   changePassword,
   getLikedPlaces,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  deleteProfileImage
 };

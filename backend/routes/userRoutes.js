@@ -1,5 +1,5 @@
 const express = require('express')
-const { signup, login, logout, getUser, changeProfileImage, changeName, changePassword, getLikedPlaces, forgotPassword, resetPassword } = require('../controllers/userController');
+const { signup, login, logout, getUser, changeProfileImage, changeName, changePassword, getLikedPlaces, forgotPassword, resetPassword, deleteProfileImage } = require('../controllers/userController');
 const isAuthenticated = require('../middlewares/isAuthenticated');
 const upload = require('../utils/multer');
 const { uploadImage } = require('../utils/uploadImage');
@@ -10,6 +10,7 @@ userRouter.post("/login",login)
 userRouter.get("/logout",logout)
 userRouter.get("/",isAuthenticated,getUser)
 userRouter.put("/change-profile-image",upload.single('profileImg'),isAuthenticated,changeProfileImage)
+userRouter.delete("/delete-profile-image",isAuthenticated,deleteProfileImage)
 userRouter.put("/change-name",isAuthenticated,changeName)
 userRouter.put("/change-password",isAuthenticated,changePassword)
 userRouter.get("/liked-places",isAuthenticated,getLikedPlaces)
