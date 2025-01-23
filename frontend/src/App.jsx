@@ -15,10 +15,10 @@ import Profile from './pages/Profile';
 import Contact from './pages/Contact';
 import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from './routes/PublicRoute';
+import AdminRoute from './routes/AdminRoute';
 import './App.css';
 
 const App = () => {
-
 
   return (
     <BrowserRouter>
@@ -38,10 +38,14 @@ const App = () => {
           <Route exact path="/place/:id" element={<Place />} />
 
           {/* Create New Place Route */}
-          <Route exact path="/place/new" element={<CreatePlace />} />
+          <Route exact path="/place/new" element={<AdminRoute>
+            <CreatePlace />
+          </AdminRoute>} />
 
           {/* Update Place route */}
-          <Route exact path="/place/:id/edit" element={<UpdatePlace />} />
+          <Route exact path="/place/:id/edit" element={<AdminRoute>
+            <UpdatePlace />
+          </AdminRoute>} />
 
           {/* User Authentication Routes */}
           <Route path="/signup" element={<PublicRoute>
