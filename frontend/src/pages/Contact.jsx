@@ -45,7 +45,7 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Your Name"
-                  className="input input-info w-full"
+                  className="input input-success w-full"
                   required
                 />
               </div>
@@ -60,7 +60,7 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Your Email"
-                  className="input input-info w-full"
+                  className="input input-success w-full"
                   required
                 />
               </div>
@@ -75,7 +75,7 @@ const Contact = () => {
                   value={formData.subject}
                   onChange={handleChange}
                   placeholder="Subject"
-                  className="input input-info w-full"
+                  className="input input-success w-full"
                   required
                 />
               </div>
@@ -95,7 +95,7 @@ const Contact = () => {
               </div>
 
               <div className="form-control mt-6">
-                <button type="submit" className="btn btn-info w-full">
+                <button type="submit" className="btn btn-success w-full">
                   Send Message
                 </button>
               </div>

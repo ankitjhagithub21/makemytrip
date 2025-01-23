@@ -16,7 +16,7 @@ const UpdateName = ({user}) => {
             const data = await changeName(fullName)
           dispatch( setUser({ ...user, fullName: data.fullName }))
             toast.success("Name changed successfully.");
-            document.getElementById('my_modal_2').close()
+            document.getElementById('my_modal_2').close();
         } catch (error) {
             toast.error(error.response.data.message)
         }finally{

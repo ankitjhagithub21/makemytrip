@@ -23,8 +23,8 @@ const UpdateProfile = ({ user }) => {
         try {
             const res = await changeProfileImage(formData)
             dispatch(setUser({ ...user, profileImg: res.url }))
-            toast.success("Profile photo changed.")
-            e.target.reset();
+            toast.success("Profile photo changed.");
+            document.getElementById('my_modal_1').close()
         } catch (error) {
             toast.error(error.response?.data?.message || 'Something went wrong')
         } finally {

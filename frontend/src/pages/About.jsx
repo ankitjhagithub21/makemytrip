@@ -15,12 +15,14 @@ const About = () => {
           <h2 className="text-3xl font-semibold text-gray-800 mb-4">Features</h2>
           <ul className="list-disc list-inside text-lg text-gray-600">
             <li>Signup, Login, and Logout functionality with validation</li>
+            <li>Reset Password</li>
             <li>Admins can create, delete, and update places</li>
             <li>Users can rate and review any place, as well as delete their review</li>
             <li>Users can view a list of available places</li>
             <li>Users can view detailed information about each place</li>
             <li>Users can update their profile photo, name, and password</li>
             <li>Users can add any place to their favorites or remove it from favorites</li>
+            <li>User and admin routes are protected.</li>
           </ul>
         </div>
 

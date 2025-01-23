@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { signup } from "../api/user";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -8,8 +8,28 @@ import toast from "react-hot-toast";
 const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [profilePreview, setProfilePreview] = useState('');
+  const [profilePic, setProfilePic] = useState(null)
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      if (profilePreview) URL.revokeObjectURL(profilePreview);
+    };
+  }, [profilePreview]);
+
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfilePic(file);
+      setProfilePreview(URL.createObjectURL(file)); // Set preview for uploaded file
+    }
+  };
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,8 +37,8 @@ const Signup = () => {
     formData.append("fullName", e.target.fullName.value);
     formData.append("email", e.target.email.value);
     formData.append("password", e.target.password.value);
-    if (e.target.profileImg) {
-      formData.append("profileImg", e.target.profileImg.files[0]);
+    if (profilePic) {
+      formData.append("profileImg", profilePic);
     }
 
     setLoading(true);
@@ -37,7 +57,7 @@ const Signup = () => {
   };
 
   return (
-    <section className="px-5 auth relative h-[80vh] flex items-center justify-center">
+    <section className="px-5 auth relative h-[90vh] flex items-center justify-center">
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-60"></div>
 
@@ -45,6 +65,32 @@ const Signup = () => {
         <h1 className="text-2xl font-semibold mb-5">Sign Up</h1>
         {error && <p className="text-red-500 mb-3">{error}</p>}
         <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+          <div className='bg-gray-200 w-28 h-28 rounded-full mx-auto overflow-hidden flex items-center justify-center'>
+            <label htmlFor="profilePic">
+              {profilePreview ? (
+                <img
+                  src={profilePreview}
+                  alt="Profile Preview"
+                  className="w-full h-full object-cover cursor-pointer"
+                />
+              ) : (
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                  alt="Profile Preview"
+                  className="w-full h-full object-cover cursor-pointer"
+                />
+              )}
+            </label>
+            <input
+              type="file"
+              name="profilePic"
+              id="profilePic"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </div>
+
           <label className="input input-success flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -104,13 +150,7 @@ const Signup = () => {
             />
           </label>
 
-          <input
-            type="file"
-            className="file-input file-input-bordered file-input-success w-full"
-            placeholder="Upload profile image"
-            name="profileImg"
 
-          />
 
           <button
             disabled={loading}
