@@ -4,6 +4,8 @@ const validator = require("validator");
 const generateToken = require("../utils/generateToken");
 const { uploadImage, deleteImage } = require("../utils/uploadImage");
 const { getPublicId } = require("../utils/getPublicId");
+const crypto = require('crypto');
+const sendMail = require("../utils/sendMail");
 
 const signup = async (req, res) => {
   try {
@@ -301,6 +303,98 @@ const getLikedPlaces = async (req, res) => {
   }
 };
 
+const forgotPassword = async(req,res) =>{
+  const {email} = req.body;
+
+  try{
+      
+      const user = await User.findOne({email})
+
+      if(!user){
+          return res.status(404).json({message:"User not found."})
+      }
+
+      //Generate reset token
+      const resetToken = crypto.randomBytes(32).toString('hex');
+
+      user.resetPasswordToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex')
+
+      user.resetPasswordExpires = Date.now() + 3600000; //1 hour
+      await user.save()
+      //send reset email
+      const resetUrl = `${process.env.ORIGIN}/reset-password/${resetToken}`;
+
+      await sendMail(
+        email,
+        'Password Reset Request - MakeMyTrip',
+        `You requested a password reset. Click here: ${resetUrl}`
+      );
+
+      res.status(200).json({
+     
+          message:"Password reset email sent.",
+          
+      })
+    
+
+  }catch(error){
+      res.status(500).json({
+          
+          message:error.message
+      })
+  }
+}
+
+const resetPassword = async(req,res) =>{
+  const {token} = req.params;
+  const {password} = req.body;
+  try{
+      
+       const hashedToken = crypto.createHash('sha256').update(token).digest('hex')
+
+       const user = await User.findOne({
+          resetPasswordToken:hashedToken,
+          resetPasswordExpires:{$gt:Date.now()}
+       });
+
+       if(!user){
+          return res.status(400).json({
+              message:"Invalid or expired token."
+          })
+
+       }
+       if(!validator.isStrongPassword(password)){
+          return res.status(400).json({
+             
+              message:"Password must contain 8 characters with atleast 1 uppercase letter and special character."
+          })
+       }
+
+       const hashedPassword = await bcrypt.hash(password,10)
+       user.password = hashedPassword;
+       user.resetPasswordToken = undefined;
+       user.resetPasswordExpires = undefined;
+
+       await user.save();
+
+
+      res.status(200).json({
+          message:"Password Updated successfully."
+      })
+    
+
+  }catch(error){
+      res.status(500).json({
+          message:"Internal server error."
+      })
+  }
+}
+
+
+
 
 module.exports = {
   signup,
@@ -310,5 +404,7 @@ module.exports = {
   changeProfileImage,
   changeName,
   changePassword,
-  getLikedPlaces
+  getLikedPlaces,
+  forgotPassword,
+  resetPassword
 };

@@ -45,6 +45,16 @@ export const getUserLikedPlaces = async() => {
     return data;
 }
 
+export const sendOtp = async(userData) => {
+    const {data} = await axios.post(`${baseUrl}/forgot-password`,userData)
+    return data;
+}
+
+export const resetPassword = async(password,token) => {
+    const {data} = await axios.post(`${baseUrl}/reset-password/${token}`,{password})
+    return data;
+}
+
 
 
 

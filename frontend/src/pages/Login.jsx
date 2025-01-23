@@ -108,9 +108,13 @@ const Login = () => {
             Login
           </button>
         </form>
+       
+      <div className="text-center my-2">
+      <Link to={"/forgot-password"} className="text-sm underline text-blue-600">Forgot Password</Link>
+      </div>
         <p className="mt-3 text-sm text-center">
           Don't have an account ?{" "}
-          <Link to={"/signup"} className="underline text-green-600">
+          <Link to={"/signup"} className="underline  text-green-600">
             Signup
           </Link>{" "}
         </p>

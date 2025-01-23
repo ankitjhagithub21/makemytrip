@@ -29,7 +29,9 @@ const userSchema = new Schema({
       ref:"Place",
       default:[]
      }
-  ]
+  ],
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
  
 },{versionKey:false});
 

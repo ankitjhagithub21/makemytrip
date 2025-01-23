@@ -1,5 +1,5 @@
 const express = require('express')
-const { signup, login, logout, getUser, changeProfileImage, changeName, changePassword, getLikedPlaces } = require('../controllers/userController');
+const { signup, login, logout, getUser, changeProfileImage, changeName, changePassword, getLikedPlaces, forgotPassword, resetPassword } = require('../controllers/userController');
 const isAuthenticated = require('../middlewares/isAuthenticated');
 const upload = require('../utils/multer');
 const { uploadImage } = require('../utils/uploadImage');
@@ -13,6 +13,8 @@ userRouter.put("/change-profile-image",upload.single('profileImg'),isAuthenticat
 userRouter.put("/change-name",isAuthenticated,changeName)
 userRouter.put("/change-password",isAuthenticated,changePassword)
 userRouter.get("/liked-places",isAuthenticated,getLikedPlaces)
+userRouter.post("/forgot-password",forgotPassword)
+userRouter.post("/reset-password/:token",resetPassword)
 
 
 module.exports = userRouter

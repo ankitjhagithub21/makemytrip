@@ -17,6 +17,8 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from './routes/PublicRoute';
 import AdminRoute from './routes/AdminRoute';
 import './App.css';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 const App = () => {
 
@@ -33,6 +35,8 @@ const App = () => {
             <Profile />
           </ProtectedRoute>} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
 
           {/* Place Details Route */}
           <Route exact path="/place/:id" element={<Place />} />
