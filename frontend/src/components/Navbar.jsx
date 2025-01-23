@@ -1,8 +1,40 @@
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getUser, logoutUser } from "../api/user";
+import { setIsLoading,  setUser } from "../redux/slices/userSlice";
+import { useEffect } from "react";
 
 
-const Navbar = ({logout,user}) => {
- 
+const Navbar = () => {
+ const dispatch = useDispatch()
+ const {user} = useSelector(state=>state.user)
+  const logout = async() => {
+    try {
+      await logoutUser();
+      dispatch(setUser(null));
+      toast.success("Logout successfull.");
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
+
+
+  useEffect(() => {
+    const fetchUser = async () => {
+
+      try {
+        dispatch(setIsLoading(true))
+        const data = await getUser();
+        dispatch(setUser(data));
+      } catch (error) {
+        dispatch(setUser(null))
+      } finally {
+        dispatch(setIsLoading(false))
+      }
+    };
+    fetchUser();
+  }, []);
 
   return (
     <div className="navbar bg-base-200 sticky top-0 z-50 shadow-lg">
@@ -77,7 +109,7 @@ const Navbar = ({logout,user}) => {
             >
               {user.role === "admin" && (
                 <li>
-                  <a>Add Place</a>
+                  <Link to={"/place/new"}>Add Place</Link>
                 </li>
               )}
               <li>

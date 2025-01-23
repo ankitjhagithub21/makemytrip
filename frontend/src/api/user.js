@@ -14,9 +14,9 @@ export const login = async(userData) => {
     return data;
 }
 
-export const logoutUser = () => {
-    const {data} = axios.get(`${baseUrl}/logout`)
-    return data;
+export const logoutUser = async() => {
+    await axios.get(`${baseUrl}/logout`)
+    
 }
 
 export const getUser = async() => {
@@ -36,6 +36,12 @@ export const changeName = async(fullName) => {
 
 export const changePassword = async(userData) => {
     const {data} = await axios.put(`${baseUrl}/change-password`,userData)
+    return data;
+}
+
+
+export const getUserLikedPlaces = async() => {
+    const {data} = await axios.get(`${baseUrl}/liked-places`)
     return data;
 }
 

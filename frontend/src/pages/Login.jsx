@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import { login } from "../api/user";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setIsLoggedIn, setUser } from "../redux/slices/userSlice";
+import { setUser } from "../redux/slices/userSlice";
 import toast from "react-hot-toast";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
-
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,14 +20,12 @@ const Login = () => {
       const data = await login(formObject);
 
       if (data.success) {
-        dispatch(setIsLoggedIn(true));
         dispatch(setUser(data.user));
-        navigate("/");
         toast.success(data.message);
-       
+        navigate("/");
       }
     } catch (error) {
-      setError(error.response.data.message);
+      setError(error.response?.data?.message || "An error occurred");
     } finally {
       setLoading(false);
     }
@@ -42,14 +39,12 @@ const Login = () => {
     try {
       const data = await login(demo);
       if (data.success) {
-        dispatch(setIsLoggedIn(true));
         dispatch(setUser(data.user));
         toast.success(data.message);
         navigate("/");
       }
     } catch (error) {
-      setError(error.response.data.message);
-      console.log(error);
+      setError(error.response?.data?.message || "An error occurred");
     } finally {
       setLoading(false);
     }

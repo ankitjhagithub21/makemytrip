@@ -5,23 +5,32 @@ const createPlace = async (req, res) => {
   const { title, description, image, location, country, price } = req.body;
 
   try {
+    // Validate required fields
     if (!title || !description || !image || !location || !country || !price) {
       return res.status(400).json({ message: "All fields are required." });
     }
+
+
+    // Create the new place
     const newPlace = await Place.create({
-      title,
-      description,
-      image,
-      location,
-      country,
+      title: title.trim(),
+      description: description.trim(),
+      image: image.trim(),
+      location: location.trim(),
+      country: country.trim(),
       price,
     });
 
-    res.status(201).json({ place: newPlace });
+    res.status(201).json({
+      message: "Place created successfully.",
+      place: newPlace,
+    });
+
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "An error occurred while creating the place.", error: error.message });
   }
 };
+
 
 const displayAllPlaces = async (req, res) => {
   try {
@@ -56,30 +65,43 @@ const getPlaceById = async (req, res) => {
 
 const updatePlace = async (req, res) => {
   const { title, description, image, location, country, price } = req.body;
+
   try {
+    // Validate input fields
     if (!title || !description || !image || !location || !country || !price) {
       return res.status(400).json({ message: "All fields are required." });
     }
 
-    const updatedPlace = await Place.findByIdAndUpdate(req.params.id, {
-      title,
-      description,
-      image,
-      location,
-      country,
-      price,
-    });
 
+    // Update place in the database
+    const updatedPlace = await Place.findByIdAndUpdate(
+      req.params.id,
+      {
+        title: title.trim(),
+        description: description.trim(),
+        image: image.trim(),
+        location: location.trim(),
+        country: country.trim(),
+        price,
+      },
+      { new: true, runValidators: true } // Return the updated document and run schema validators
+    );
+
+    // Check if the place exists
     if (!updatedPlace) {
       return res.status(404).json({ message: "Place not found." });
     }
 
-    res.status(200).json({ place: updatedPlace });
+    res.status(200).json({
+      message: "Place updated successfully.",
+      place: updatedPlace,
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error" });
+    console.error("Error updating place:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
 
 const deletePlace = async (req, res) => {
   try {
@@ -111,35 +133,40 @@ const likeUnlikePlace = async (req, res) => {
     }
 
     if (place.likes.includes(userId)) {
+      // If the user has already liked the place, unlike it
       const index = place.likes.findIndex(
-        (id) => id.toString() === userId.toString()
+        (likeId) => likeId.toString() === userId.toString()
+      );
+      place.likes.splice(index, 1);
+
+      // Remove from user's favorites if it's there
+      const favIndex = user.favs.findIndex(
+        (placeId) => placeId.toString() === place._id.toString()
       );
 
-      place.likes.splice(index, 1);
-      
-      if (user.favs.includes(place._id)) {
-        const index = user.favs.findIndex(
-          (placeId) => placeId.toString() === userId.toString()
-        );
-        user.favs.splice(index, 1);
+      if (favIndex !== -1) {
+        user.favs.splice(favIndex, 1);
       }
 
-      await Promise.all([place.save(),user.save()]);
+      await Promise.all([place.save(), user.save()]);
       return res
         .status(200)
         .json({ message: "Place unliked successfully.", place });
     }
 
+    // If the user hasn't liked the place, like it
     user.favs.push(place._id);
     place.likes.push(user._id);
 
-    await Promise.all([place.save(),user.save()]);
+    await Promise.all([place.save(), user.save()]);
 
     res.status(200).json({ message: "Place liked successfully.", place });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
+
 
 module.exports = {
   createPlace,

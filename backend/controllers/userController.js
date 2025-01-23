@@ -279,6 +279,28 @@ const changePassword = async (req, res) => {
 };
 
 
+const getLikedPlaces = async (req, res) => {
+  
+  try {
+    const user = await User.findById(req.user.id).populate({
+      path:"favs",
+      select:"-description"
+    });
+
+    if (!user) {
+      return res.status(401).json({ message: "User not found." });
+    }
+
+    
+    return res
+      .status(200)
+      .json({places:user.favs});
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 
 module.exports = {
   signup,
@@ -287,5 +309,6 @@ module.exports = {
   getUser,
   changeProfileImage,
   changeName,
-  changePassword
+  changePassword,
+  getLikedPlaces
 };

@@ -4,7 +4,6 @@ import { createSlice } from '@reduxjs/toolkit'
 export const userSlice = createSlice({
   name: 'user',
   initialState:{
-     isLoggedIn:false,
      user:null,
      isLoading:true
      
@@ -12,10 +11,7 @@ export const userSlice = createSlice({
   
   reducers: {
    
-    setIsLoggedIn: (state, action) => {
-      state.isLoggedIn = action.payload
-      
-    },
+    
     setUser: (state, action) => {
       state.user = action.payload
     },
@@ -27,6 +23,6 @@ export const userSlice = createSlice({
 })
 
 
-export const { setIsLoggedIn,setUser,setIsLoading} = userSlice.actions
+export const { setUser,setIsLoading} = userSlice.actions
 
 export default userSlice.reducer

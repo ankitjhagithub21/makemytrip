@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { addNewPlace } from "../api/place";
 import { useNavigate } from "react-router-dom";
+import { createPlace } from "../api/place";
 
-const CreatePlace = ({ updatePlaces }) => {
+const CreatePlace = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
@@ -21,10 +21,9 @@ const CreatePlace = ({ updatePlaces }) => {
 
     setLoading(true); // Set loading to true
     try {
-      const data = await addNewPlace(formEntries); // Use formEntries directly
-      updatePlaces(data.place); // Update the places with the newly added place
+      const data = await createPlace(formEntries); // Use formEntries directly    
       toast.success("Place created.")
-      navigate("/"); // Navigate to the home page
+      navigate("/")
     } catch (error) {
       toast.error(error.response?.data?.message || "An error occurred");
       console.log(error);
@@ -137,7 +136,7 @@ const CreatePlace = ({ updatePlaces }) => {
             />
           </div>
 
-          <button type="submit" className="btn btn-success">
+          <button type="submit" disabled={loading} className="btn btn-success">
             {loading && <span className="loading loading-spinner"></span>}
             Submit
           </button>

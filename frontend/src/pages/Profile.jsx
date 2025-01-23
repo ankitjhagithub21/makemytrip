@@ -5,15 +5,15 @@ import ChangePassword from '../components/ChangePassword'
 import { useSelector } from 'react-redux'
 
 
-const Profile = () => {
+const Profile = ({likeUnlike}) => {
    
   const {user} = useSelector(state=>state.user)
     return (
-        <section className="py-24 min-h-screen  px-5">
+        <section className="py-24 min-h-screen flex  flex-wrap px-5">
             <UpdateProfile user={user} />
             <UpdateName user={user} />
             <ChangePassword />
-            <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg flex flex-col items-center justify-center space-y-4">
+            <div className="lg:w-1/4  w-full bg-white rounded-lg shadow-lg flex flex-col items-center justify-center space-y-4">
                 <h1 className="text-3xl font-semibold text-gray-800 text-center">Your Profile</h1>
 
                 {/* Profile Image */}
@@ -43,6 +43,7 @@ const Profile = () => {
                     Change Password
                 </button>
             </div>
+           
         </section>
     )
 }

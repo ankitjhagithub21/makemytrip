@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { deleteReview } from "../api/review";
 import NotFound from "./NotFound";
 
-const Place = ({deletePlace}) => {
+const Place = () => {
   const { id } = useParams();
   const [place, setPlace] = useState(null);
   const [reviews,setReviews] = useState([]);
@@ -39,6 +39,7 @@ const Place = ({deletePlace}) => {
   }
 
   const handleDeleteReview = async(reviewId) =>{
+    
     if(!user){
       return toast.error("You are not logged in.")
     }
@@ -50,10 +51,11 @@ const Place = ({deletePlace}) => {
       toast.success(data.message)
 
     }catch(error){
-      toast.error(error.response.data.message)
+      toast.error(error.response?.data?.message || "An error occured.")
       console.log(error)
     }
   }
+
   const handleDeletePlace = async(placeId) =>{
     if(!user){
       return toast.error("You are not logged in.")
@@ -64,19 +66,14 @@ const Place = ({deletePlace}) => {
     }
 
     try{
-      const data = await removePlace(placeId)
-      deletePlace(placeId);
+      const data = await removePlace(placeId) 
+      navigate("/")    
       toast.success(data.message)
-      navigate("/")
-
+     
     }catch(error){
-      
-      toast.error(error.response.data.message)
+      toast.error(error.response?.data?.message)
     }
   }
-
-  
-
 
   if (loading) {
     return <PlaceLoading />;
@@ -90,7 +87,7 @@ const Place = ({deletePlace}) => {
 
   return (
     <div className="max-w-6xl mx-auto px-5 my-12">
-      <button onClick={()=>navigate(-1)} className="btn btn-success">
+      <button onClick={()=>navigate("/")} className="btn btn-success">
         
         Back</button>
       {place && <PlaceDetails place={place} deletePlace={handleDeletePlace}/>}

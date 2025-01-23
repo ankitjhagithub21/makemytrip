@@ -6,13 +6,16 @@ import { useNavigate } from "react-router-dom";
 import NotFound from "./NotFound";
 
 const UpdatePlace = () => {
-  const [loading, setLoading] = useState(false);
+
+  const { currPlace } = useSelector((state) => state.place);
+  const { user } = useSelector((state) => state.user);
+
   const navigate = useNavigate();
-  const { user, currPlace } = useSelector((state) => state.place);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (loading) return;
+    
     if (!user) {
       return toast.error("You are not logged in.");
     }
@@ -149,7 +152,7 @@ const UpdatePlace = () => {
             />
           </div>
 
-          <button type="submit" className="btn btn-success">
+          <button type="submit" disabled={loading} className="btn btn-success">
             {loading && <span className="loading loading-spinner"></span>}
             Submit
           </button>

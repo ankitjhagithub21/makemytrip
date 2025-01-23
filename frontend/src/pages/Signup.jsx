@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { signup } from "../api/user";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setIsLoggedIn, setUser } from "../redux/slices/userSlice";
+import { setUser } from "../redux/slices/userSlice";
 import toast from "react-hot-toast";
 
 const Signup = () => {
@@ -17,18 +17,16 @@ const Signup = () => {
     formData.append("fullName", e.target.fullName.value);
     formData.append("email", e.target.email.value);
     formData.append("password", e.target.password.value);
-    if(e.target.profileImg){
-      formData.append("profileImg", e.target.profileImg.files[0]); 
+    if (e.target.profileImg) {
+      formData.append("profileImg", e.target.profileImg.files[0]);
     }
 
     setLoading(true);
     try {
       const data = await signup(formData); // Call the signup API
       if (data.success) {
-        dispatch(setIsLoggedIn(true)); 
         dispatch(setUser(data.user))
         toast.success(data.message)
-        e.target.reset(); // Reset the form
         navigate("/"); // Navigate to home
       }
     } catch (error) {
@@ -111,7 +109,7 @@ const Signup = () => {
             className="file-input file-input-bordered file-input-success w-full"
             placeholder="Upload profile image"
             name="profileImg"
-            
+
           />
 
           <button

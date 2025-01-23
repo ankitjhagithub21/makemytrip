@@ -1,7 +1,8 @@
 import axios from "axios"
+axios.defaults.withCredentials = true;
 const baseUrl = `${import.meta.env.VITE_SERVER_URL}/api/places`
 
-export const addNewPlace = async(place) => { 
+export const createPlace = async(place) => { 
     const {data} = await axios.post(baseUrl,place)
     return data;
 }
