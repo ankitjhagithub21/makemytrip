@@ -12,3 +12,8 @@ export const deleteReview = async(reviewId,placeId) => {
     const {data} = await axios.delete(`${baseUrl}/${placeId}/delete/${reviewId}`)
     return data;
 }
+
+export const editReview = async(reviewId,placeId,review) => { 
+    const {data} = await axios.put(`${baseUrl}/${placeId}/edit/${reviewId}`,review)
+    return data;
+}

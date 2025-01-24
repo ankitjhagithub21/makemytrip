@@ -7,7 +7,7 @@ import AddReview from "../components/AddReview";
 import Reviews from "../components/Reviews";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import { deleteReview } from "../api/review";
+import { deleteReview, editReview } from "../api/review";
 import NotFound from "./NotFound";
 
 const Place = () => {
@@ -55,6 +55,23 @@ const Place = () => {
       console.log(error)
     }
   }
+  const handleEditReview = async(reviewId,review) =>{
+    
+    if(!user){
+      return toast.error("You are not logged in.")
+    }
+    
+
+    try{
+      const data = await editReview(reviewId,id,review)
+       setReviews(reviews.map((review)=>review._id === reviewId ? data.review : review ));
+      toast.success(data.message)
+
+    }catch(error){
+      toast.error(error.response?.data?.message || "An error occured.")
+      console.log(error)
+    }
+  }
 
   const handleDeletePlace = async(placeId) =>{
     if(!user){
@@ -95,7 +112,7 @@ const Place = () => {
       <hr />
       <AddReview placeId={place._id} addNewReview={addNewReview}/>
       {reviews.length > 0 ? (
-       <Reviews reviews={reviews} handleDelete={handleDeleteReview}/>
+       <Reviews reviews={reviews} handleDelete={handleDeleteReview} handleEdit={handleEditReview}/>
       ) : (
         <p className="text-gray-500 text-center">No reviews yet.</p>
       )}
