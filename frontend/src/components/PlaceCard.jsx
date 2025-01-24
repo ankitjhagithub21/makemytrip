@@ -1,6 +1,6 @@
 import React from 'react';
 import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { likeUnlikePlace } from '../api/place';
@@ -10,6 +10,7 @@ const PlaceCard = ({ place}) => {
   
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   const handleLikeUnlike = async () => {
     if (!user) {
@@ -19,7 +20,9 @@ const PlaceCard = ({ place}) => {
     try {
       const data = await likeUnlikePlace(place._id); // Call API to like/unlike the place
       dispatch(likeUnlike({_id:place._id,place:data.place}))
-      toast.success(data.message); // Show success message
+      navigate("/profile")
+      toast.success(data.message); 
+      
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong.");
     }

@@ -7,6 +7,7 @@ export const placeSlice = createSlice({
      places:[],
      currPlace:null,
      isLoading:true,
+     searchTerm:'',
   },
   
   reducers: {
@@ -25,12 +26,15 @@ export const placeSlice = createSlice({
     likeUnlike:(state,action) => {
       state.places = state.places.map((place) => place._id == action.payload._id ? action.payload.place : place);
     },
+    setSearchTerm:(state,action) => {
+      state.searchTerm = action.payload
+    },
 
     
   },
 })
 
 
-export const { setPlaces,setCurrPlace,setIsLoading,likeUnlike } = placeSlice.actions
+export const { setPlaces,setCurrPlace,setIsLoading,likeUnlike,setSearchTerm } = placeSlice.actions
 
 export default placeSlice.reducer

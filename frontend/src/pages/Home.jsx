@@ -2,30 +2,45 @@ import PlaceCard from "../components/PlaceCard";
 import HomePageLoading from "../components/HomePageLoading";
 import { useSelector } from "react-redux";
 import useFetchPlaces from "../hooks/useFetchPlaces";
+import Searchbar from "../components/Searchbar";
 
 const Home = () => {
   useFetchPlaces();
-  const { places, isLoading } = useSelector((state) => state.place);
-  
+  const { places, isLoading, searchTerm } = useSelector((state) => state.place);
+
+  // Filter places based on searchTerm matching title, location, or country
+  const filteredPlaces = places.filter((place) => {
+    const search = searchTerm.toLowerCase();
+    return (
+      place.title.toLowerCase().includes(search) ||
+      place.location.toLowerCase().includes(search) ||
+      place.country.toLowerCase().includes(search)
+    );
+  });
 
   return (
-    <div className="max-w-6xl mx-auto min-h-screen py-24 px-5">
-      {isLoading ? (
-        <HomePageLoading />
-      ) : (
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-12">
-          {places.length > 0 ? (
-            places.map((place) => (
-              <PlaceCard key={place._id} place={place} />
-            ))
-          ) : (
-            <p className="text-center text-gray-500 col-span-full">
-              No places available.
-            </p>
-          )}
-        </div>
-      )}
-    </div>
+    <section>
+      <Searchbar />
+      <div className="max-w-6xl mx-auto min-h-screen py-24 px-5">
+        {isLoading ? (
+          <HomePageLoading />
+        ) : (
+          <>
+            {filteredPlaces.length > 0 ? (
+              <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-12">
+                {filteredPlaces.map((place) => (
+                  <PlaceCard key={place._id} place={place} />
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-gray-500 col-span-full">
+                No places found matching your search.
+              </p>
+            )}
+          </>
+        )}
+      </div>
+    </section>
   );
 };
 
