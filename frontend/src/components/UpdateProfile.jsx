@@ -13,10 +13,11 @@ const UpdateProfile = () => {
 
     useEffect(() => {
         return () => {
-            if (profilePreview) URL.revokeObjectURL(profilePreview);
+            if (profilePreview && profilePreview !== user.profileImg) {
+                URL.revokeObjectURL(profilePreview);
+            }
         };
-    }, [profilePreview]);
-
+    }, [profilePreview, user.profileImg]);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -26,14 +27,10 @@ const UpdateProfile = () => {
         }
     };
 
-
     const handleUploadImage = async () => {
-       
-
         if (!profileImg) {
-            return toast.error("Please choose an image.")
+            return toast.error("Please choose an image.");
         }
-
 
         const formData = new FormData();
         formData.append('profileImg', profileImg)
@@ -44,19 +41,21 @@ const UpdateProfile = () => {
             toast.success("Profile photo changed.");
             document.getElementById('my_modal_1').close()
         } catch (error) {
-            toast.error(error.response?.data?.message || 'Something went wrong')
+            toast.error(error?.response?.data?.message || 'Something went wrong')
         } finally {
             setLoading(false)
         }
     }
+
     const handleRemoveImage = async () => {
         try {
             const res = await deleteProfileImage();
             dispatch(setUser({ ...user, profileImg: res.url }))
             toast.success(res.message);
+            setProfilePreview(null)
             document.getElementById('my_modal_1').close()
         } catch (error) {
-            toast.error(error.response?.data?.message || 'Something went wrong')
+            toast.error(error?.response?.data?.message || 'Something went wrong')
         } finally {
             setLoading(false)
         }
@@ -66,8 +65,6 @@ const UpdateProfile = () => {
         <dialog id="my_modal_1" className="modal">
             <div className="modal-box">
                 <h3 className="font-bold text-lg mb-3">Edit profile</h3>
-
-
 
                 <div className=' w-28 h-28 rounded-full mx-auto overflow-hidden flex items-center justify-center'>
                     <label htmlFor="profileImg">
@@ -93,12 +90,7 @@ const UpdateProfile = () => {
                         onChange={handleFileChange}
                         className="hidden"
                     />
-
-
                 </div>
-
-
-
 
                 <div className='flex gap-3 items-center justify-center  mt-5'>
                     <button onClick={handleUploadImage} disabled={loading} className="btn btn-info btn-sm">
@@ -106,15 +98,12 @@ const UpdateProfile = () => {
                         Change Photo
                     </button>
                     <button onClick={handleRemoveImage} disabled={loading} className=" btn hover:bg-red-800 btn-sm bg-red-600 text-white">
-                      
                         Remove Photo
                     </button>
-
                 </div>
 
                 <div className="modal-action">
                     <form method="dialog">
-                        {/* This button closes the modal */}
                         <button className="btn">Close</button>
                     </form>
                 </div>
@@ -123,4 +112,4 @@ const UpdateProfile = () => {
     )
 }
 
-export default UpdateProfile
+export default UpdateProfile;
