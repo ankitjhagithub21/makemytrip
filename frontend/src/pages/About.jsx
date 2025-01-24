@@ -18,7 +18,7 @@ const About = () => {
             <li>Reset Password</li>
             <li>Admins can create, delete, and update places</li>
             <li>Users can search any place by there name , location and country</li>
-            <li>Users can rate and review any place, as well as delete their review</li>
+            <li>Users can rate and review any place, as well as delete and edit their review</li>
             <li>Users can view a list of available places</li>
             <li>Users can view detailed information about each place</li>
             <li>Users can update their profile photo, name, and password</li>

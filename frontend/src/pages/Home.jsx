@@ -19,9 +19,9 @@ const Home = () => {
   });
 
   return (
-    <section>
+    <section className="min-h-screen">
       <Searchbar />
-      <div className="max-w-6xl mx-auto min-h-screen py-24 px-5">
+      <div className="max-w-6xl mx-auto py-24 px-5">
         {isLoading ? (
           <HomePageLoading />
         ) : (
