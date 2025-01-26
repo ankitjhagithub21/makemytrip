@@ -64,7 +64,7 @@ const Navbar = () => {
             {links.map((link, idx) => (
               <li key={idx}>
                 <Link
-                  to={`/${idx === 0 ? '': link.toLowerCase() }`}
+                  to={`/${idx === 0 ? '' : link.toLowerCase()}`}
                   onClick={() => setActive(idx)} // Set active index on click
                   className={active === idx ? "bg-gray-300" : ""}
                 >
@@ -72,6 +72,8 @@ const Navbar = () => {
                 </Link>
               </li>
             ))}
+
+          
           </ul>
         </div>
         <Link
@@ -83,17 +85,18 @@ const Navbar = () => {
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-        {links.map((link, idx) => (
-              <li key={idx}>
-                <Link
-                  to={`/${idx === 0 ? '': link.toLowerCase() }`}
-                  onClick={() => setActive(idx)} // Set active index on click
-                  className={active === idx ? "bg-gray-300" : ""}
-                >
-                  {link}
-                </Link>
-              </li>
-            ))}
+          {links.map((link, idx) => (
+            <li key={idx}>
+              <Link
+                to={`/${idx === 0 ? '' : link.toLowerCase()}`}
+                onClick={() => setActive(idx)} // Set active index on click
+                className={active === idx ? "bg-gray-300" : ""}
+              >
+                {link}
+              </Link>
+            </li>
+          ))}
+           
         </ul>
       </div>
       <div className="navbar-end">
@@ -111,9 +114,14 @@ const Navbar = () => {
               className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
             >
               {user.role === "admin" && (
+                <>
                 <li>
                   <Link to={"/place/new"}>Add Place</Link>
                 </li>
+                 <li>
+                 <Link to={"/users"}>Manage users</Link>
+               </li>
+                </>
               )}
               <li>
                 <Link to={"/profile"}>Your Profile</Link>

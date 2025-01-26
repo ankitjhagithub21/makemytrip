@@ -19,6 +19,7 @@ import AdminRoute from './routes/AdminRoute';
 import './App.css';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import Users from './pages/Users';
 
 const App = () => {
 
@@ -49,6 +50,11 @@ const App = () => {
           {/* Update Place route */}
           <Route exact path="/place/:id/edit" element={<AdminRoute>
             <UpdatePlace />
+          </AdminRoute>} />
+
+            {/* Update Place route */}
+            <Route exact path="/users" element={<AdminRoute>
+            <Users />
           </AdminRoute>} />
 
           {/* User Authentication Routes */}

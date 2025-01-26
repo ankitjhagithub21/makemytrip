@@ -1,12 +1,10 @@
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
-import LoadingPage from '../components/LoadingPage'
+
 
 const PublicRoute = ({children}) => {
-    const {user,isLoading} = useSelector(state=>state.user)
-    if(isLoading){
-        return <LoadingPage/>
-    }
+    const {user} = useSelector(state=>state.user)
+    
     if(user){
         return <Navigate to={"/"}/>
     }

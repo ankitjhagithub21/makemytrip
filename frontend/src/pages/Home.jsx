@@ -34,7 +34,7 @@ const Home = () => {
               </div>
             ) : (
               <p className="text-center text-gray-500 col-span-full">
-                No places found matching your search.
+                No places found.
               </p>
             )}
           </>

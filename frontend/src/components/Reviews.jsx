@@ -37,8 +37,8 @@ const Reviews = ({ reviews, handleDelete, handleEdit }) => {
               {/* Display user info */}
               <div className="flex items-center gap-2">
                 <img
-                  src={review.user.profileImg}
-                  alt=""
+                  src={review.user?.profileImg}
+                  alt="profile"
                   className="rounded-full w-12 h-12 object-cover object-center border"
                 />
                 <div>

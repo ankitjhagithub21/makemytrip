@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const Review = require("./review");
 
 const userSchema = new Schema({
   fullName: {
@@ -34,6 +35,20 @@ const userSchema = new Schema({
   resetPasswordExpires: Date,
  
 },{versionKey:false});
+
+
+userSchema.post("findOneAndDelete", async function (doc) {
+  if (doc) {
+    try {
+      // Delete all reviews associated with the deleted user
+      await Review.deleteMany({ user: doc._id });
+     
+      console.log("Associated reviews deleted successfully.");
+    } catch (err) {
+      console.error("Error deleting associated reviews:", err);
+    }
+  }
+});
 
 
 const User = model("User", userSchema);

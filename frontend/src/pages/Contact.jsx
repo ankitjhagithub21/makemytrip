@@ -107,15 +107,15 @@ const Contact = () => {
             <p className="text-lg  mb-5">We would love to hear from you. Please reach out to us for any inquiries or feedback!</p>
             <ul className="space-y-4">
               <li className="flex items-center gap-3">
-                <span className='text-2xl p-2 rounded-full bg-gray-300'> <MdMail/></span>
+                <span className='text-2xl p-2 rounded-full  bg-gray-300 text-green-600'> <MdMail/></span>
                 <span className="text-lg ">contact@example.com</span>
               </li>
               <li className="flex items-center gap-3">
-              <span className='text-2xl p-2 rounded-full bg-gray-300'> <MdPhone/></span>
+              <span className='text-2xl p-2 rounded-full bg-gray-300 text-green-600'> <MdPhone/></span>
                 <span className="text-lg ">+1 234 567 890</span>
               </li>
               <li className="flex items-center gap-3">
-              <span className='text-2xl p-2 rounded-full bg-gray-300'> <MdLocationPin/></span>
+              <span className='text-2xl p-2 rounded-full bg-gray-300 text-green-600'> <MdLocationPin/></span>
                 <span className="text-lg ">123 Street Name, City, Country</span>
               </li>
             </ul>

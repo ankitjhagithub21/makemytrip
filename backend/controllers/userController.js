@@ -8,6 +8,9 @@ const crypto = require("crypto");
 const sendMail = require("../utils/sendMail");
 const asyncHandler = require("../utils/asyncHandler");
 
+
+
+
 const signup = asyncHandler(async (req, res) => {
   const { fullName, email, password } = req.body;
 
@@ -336,6 +339,53 @@ const resetPassword = asyncHandler(async (req, res) => {
   });
 });
 
+const changeRole = asyncHandler(async (req, res) => {
+    const {userId,role} = req.body;
+
+    const user = await User.findById(userId).select("-password");
+
+    if(!user){
+      return res.status(404).json({message:"User not found."});
+    }
+
+    if(role !== "admin" && role !== "user"){
+      return res.status(400).json({message:"Invalid role"})
+    }
+
+    user.role = role;
+    await user.save();
+
+    res.status(200).json({message:"User role updated successfully.",role:user.role})
+
+});
+
+
+const getAllUsers = asyncHandler(async (req, res) => {
+  
+  const users = await User.find({ _id: { $ne: req.user.id } }).select("-password");
+
+  if(!users){
+    return res.status(404).json({message:"User not found."});
+  }
+
+  res.json({users})
+
+});
+
+const deleteUser = asyncHandler(async (req, res) => {
+  
+  const deletedUser = await User.findByIdAndDelete(req.params.id);
+
+  if(!deletedUser){
+    return res.status(404).json({message:"User not found."});
+  }
+
+  res.json({message:"User deleted."})
+
+});
+
+
+
 module.exports = {
   signup,
   login,
@@ -348,4 +398,7 @@ module.exports = {
   forgotPassword,
   resetPassword,
   deleteProfileImage,
+  changeRole,
+  getAllUsers,
+  deleteUser
 };

@@ -61,6 +61,23 @@ export const resetPassword = async(password,token) => {
     return data;
 }
 
+export const getAllUsers = async() => {
+    const {data} = await axios.get(`${baseUrl}/all`)
+    return data;
+}
+
+
+export const changeRole = async({userId,role}) => {
+    const {data} = await axios.post(`${baseUrl}/role`,{userId,role})
+    return data;
+}
+
+export const deleteUser = async(userId) => {
+    const {data} = await axios.delete(`${baseUrl}/${userId}`)
+    return data;
+}
+
+
 
 
 
