@@ -45,18 +45,18 @@ const PlaceCard = ({ place}) => {
           alt={place.title}
         />
       </figure>
-      <div className="card-body p-2">
+      <Link to={`/place/${place._id}`} className="card-body p-2">
         {/* Place Title and Location */}
-        <Link to={`/place/${place._id}`} className="hover:underline text-blue-700">
+        <h2>
           {place?.title}, {place?.location}
-        </Link>
+        </h2>
         {/* Place Price */}
         <p className="text-green-600 text-lg font-semibold">
           ₹{place?.price} / day
         </p>
         {/* Total Likes */}
         <p>{place?.likes?.length} likes</p>
-      </div>
+      </Link>
     </div>
   );
 };

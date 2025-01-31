@@ -22,9 +22,9 @@ const Contact = () => {
   };
 
   return (
-    <section className="py-12 ">
+    <section className="py-24">
       <div className="max-w-6xl mx-auto w-full px-5">
-        <h1 className="text-4xl font-semibold text-center  mb-10">Contact Us</h1>
+      
 
         {/* Contact Info */}
         <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-12 mb-16">
@@ -89,7 +89,7 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleChange}
                   placeholder="Your Message"
-                  className="textarea textarea-info w-full"
+                  className="textarea textarea-success w-full"
                   required
                 />
               </div>
@@ -107,16 +107,16 @@ const Contact = () => {
             <p className="text-lg  mb-5">We would love to hear from you. Please reach out to us for any inquiries or feedback!</p>
             <ul className="space-y-4">
               <li className="flex items-center gap-3">
-                <span className='text-2xl p-2 rounded-full  bg-gray-300 text-green-600'> <MdMail/></span>
-                <span className="text-lg ">contact@example.com</span>
+                <span className='text-2xl p-2 rounded-full  bg-gray-200 text-green-600'> <MdMail/></span>
+                <span>contact@example.com</span>
               </li>
               <li className="flex items-center gap-3">
-              <span className='text-2xl p-2 rounded-full bg-gray-300 text-green-600'> <MdPhone/></span>
-                <span className="text-lg ">+1 234 567 890</span>
+              <span className='text-2xl p-2 rounded-full bg-gray-200 text-green-600'> <MdPhone/></span>
+                <span>+1 234 567 890</span>
               </li>
               <li className="flex items-center gap-3">
-              <span className='text-2xl p-2 rounded-full bg-gray-300 text-green-600'> <MdLocationPin/></span>
-                <span className="text-lg ">123 Street Name, City, Country</span>
+              <span className='text-2xl p-2 rounded-full bg-gray-200 text-green-600'> <MdLocationPin/></span>
+                <span>123 Street Name, City, Country</span>
               </li>
             </ul>
           </div>
