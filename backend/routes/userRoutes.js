@@ -3,7 +3,6 @@ const { signup, login, logout, getUser, changeProfileImage, changeName, changePa
 const isAuthenticated = require('../middlewares/isAuthenticated');
 const isAdmin = require('../middlewares/isAdmin');
 const upload = require('../utils/multer');
-const { uploadImage } = require('../utils/uploadImage');
 const userRouter = express.Router();
 
 userRouter.get("/all",isAuthenticated,isAdmin,getAllUsers)

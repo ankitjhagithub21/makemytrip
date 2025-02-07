@@ -9,8 +9,6 @@ const sendMail = require("../utils/sendMail");
 const asyncHandler = require("../utils/asyncHandler");
 
 
-
-
 const signup = asyncHandler(async (req, res) => {
   const { fullName, email, password } = req.body;
 
