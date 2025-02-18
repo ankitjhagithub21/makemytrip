@@ -13,7 +13,7 @@ const Searchbar = () => {
   }
 
   return (
-    <div className='flex items-center justify-center px-5 border hero  py-24'>
+    <div className='flex items-center justify-center px-5 border auth  py-24'>
      
      <div className="overlay md:w-fit w-full p-5 rounded-xl shadow-xl ">
      <h2 className='text-4xl font-bold text-center text-white mb-5'>Where to ?</h2>

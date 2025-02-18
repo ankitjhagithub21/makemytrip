@@ -22,10 +22,6 @@ html{
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.hero{
-    background-image: url('./bg.jpg');
-}
-
 
 .loader {
   width: 50px;
