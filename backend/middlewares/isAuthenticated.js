@@ -15,7 +15,7 @@ const isAuthenticated = (req, res, next) => {
     req.user = decoded; // Attach the decoded token payload to the request object
     next(); // Proceed to the next middleware or route handler
   } catch (error) {
-    console.error("Invalid token:", error);
+
     res.status(403).json({ message: "Invalid token." });
   }
 };

@@ -13,6 +13,10 @@ html{
     background-position: center;
     background-attachment: fixed;
 }
+.slider::-webkit-scrollbar{
+    display: none;
+}
+
 
 
 .loader {

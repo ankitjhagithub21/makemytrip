@@ -20,6 +20,7 @@ import './App.css';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Users from './pages/Users';
+import Places from './pages/Places';
 
 const App = () => {
 
@@ -31,6 +32,7 @@ const App = () => {
         <Routes>
           {/* Home Route */}
           <Route path="/" element={<Home />} />
+          <Route path="/places" element={<Places />} />
           <Route path="/about" element={<About />} />
           <Route path="/profile" element={<ProtectedRoute>
             <Profile />

@@ -28,6 +28,7 @@ const Navbar = () => {
         dispatch(setUser(data));
       } catch (error) {
         dispatch(setUser(null));
+        console.log(error)
       } finally {
         dispatch(setIsLoading(false));
       }
@@ -38,7 +39,7 @@ const Navbar = () => {
   const links = ["Home", "About", "Contact"];
 
   return (
-    <div className="navbar bg-base-200 sticky top-0 z-50 shadow-lg">
+    <div className="navbar bg-[#FAFAFA] sticky top-0 z-50">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
