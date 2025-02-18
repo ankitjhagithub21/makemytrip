@@ -30,7 +30,9 @@ const PlaceDetails = ({ place, deletePlace }) => {
         alt={place.title}
         className="rounded-2xl lg:h-[400px] h-auto object-center w-full object-cover"
       />
-      <p className="text-lg">{place.description}</p>
+       <div
+      dangerouslySetInnerHTML={{ __html: place.description }}
+    />
       <p className="text-green-600 text-2xl">₹ {place.price} / day</p>
 
 

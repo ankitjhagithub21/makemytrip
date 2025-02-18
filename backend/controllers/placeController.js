@@ -1,18 +1,28 @@
 const Place = require("../models/place");
 const User = require("../models/user");
 const asyncHandler = require("../utils/asyncHandler");
+const { uploadImage } = require("../utils/uploadImage");
 
 const createPlace = asyncHandler(async (req, res) => {
   const { title, description, image, location, country, price } = req.body;
 
-  if (!title || !description || !image || !location || !country || !price) {
+  if (!title || !description || !location || !country || !price) {
     return res.status(400).json({ message: "All fields are required." });
+  }
+
+  let result;
+  if (req.file) {
+    result = await uploadImage(req.file.path);
+  }
+
+  if (!result) {
+    return res.status(400).json({ message: "Image upload failed." });
   }
 
   const newPlace = await Place.create({
     title: title.trim(),
     description: description.trim(),
-    image: image.trim(),
+    image: result.secureUrl,
     location: location.trim(),
     country: country.trim(),
     price,
@@ -46,18 +56,30 @@ const getPlaceById = asyncHandler(async (req, res) => {
 });
 
 const updatePlace = asyncHandler(async (req, res) => {
-  const { title, description, image, location, country, price } = req.body;
+  const { title, description, location, country, price } = req.body;
 
-  if (!title || !description || !image || !location || !country || !price) {
+  if (!title || !description || !location || !country || !price) {
     return res.status(400).json({ message: "All fields are required." });
   }
+
+  let result;
+
+  if(req.file){
+    result = await uploadImage(req.file.path)
+  }
+
+  if(!result){
+    return res.status(400).json({ message: "Image upload failed.." });
+  }
+
+  
 
   const updatedPlace = await Place.findByIdAndUpdate(
     req.params.id,
     {
       title: title.trim(),
       description: description.trim(),
-      image: image.trim(),
+      image: result.secureUrl,
       location: location.trim(),
       country: country.trim(),
       price,
@@ -116,7 +138,9 @@ const likeUnlikePlace = asyncHandler(async (req, res) => {
     }
 
     await Promise.all([place.save(), user.save()]);
-    return res.status(200).json({ message: "Place unliked successfully.", place });
+    return res
+      .status(200)
+      .json({ message: "Place unliked successfully.", place });
   }
 
   user.favs.push(place._id);

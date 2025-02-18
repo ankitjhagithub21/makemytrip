@@ -9,11 +9,12 @@ const {
 } = require('../controllers/placeController');
 const isAuthenticated = require('../middlewares/isAuthenticated');
 const isAdmin = require('../middlewares/isAdmin');
+const upload = require('../utils/multer');
 
 const placeRouter = express.Router();
 
 // Route to create new place
-placeRouter.post('/', isAuthenticated, isAdmin, createPlace);
+placeRouter.post('/', isAuthenticated, isAdmin, upload.single('image'), createPlace);
 
 // Route to display all places
 placeRouter.get('/', displayAllPlaces);
@@ -22,7 +23,7 @@ placeRouter.get('/', displayAllPlaces);
 placeRouter.get('/:id', getPlaceById);
 
 // Route to update place
-placeRouter.put('/:id', isAuthenticated, isAdmin, updatePlace);
+placeRouter.put('/:id', isAuthenticated, isAdmin, upload.single('image'), updatePlace);
 
 // Route to delete place
 placeRouter.delete('/:id', isAuthenticated, isAdmin, deletePlace);
