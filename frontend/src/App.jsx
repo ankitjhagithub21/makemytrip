@@ -16,11 +16,11 @@ import Contact from './pages/Contact';
 import ProtectedRoute from './routes/ProtectedRoute';
 import PublicRoute from './routes/PublicRoute';
 import AdminRoute from './routes/AdminRoute';
-import './App.css';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Users from './pages/Users';
 import Places from './pages/Places';
+import './App.css';
 
 const App = () => {
 

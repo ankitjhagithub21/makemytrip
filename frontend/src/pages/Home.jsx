@@ -1,7 +1,11 @@
 
+
+import AboutSection from "../components/AboutSection";
 import Destinations from "../components/Destinations";
+import Form from "../components/Form";
 import Searchbar from "../components/Searchbar";
-import VideoSection from "../components/VideoSection";
+import Stories from "../components/Stories";
+
 // import Places from "./Places";
 
 
@@ -9,12 +13,14 @@ const Home = () => {
 
 
   return (
-    <section className="min-h-screen">
+    <main>
       <Searchbar />
       <Destinations/>
-      <VideoSection/>
-     {/* <Places/> */}
-    </section>
+      <AboutSection/>
+      <Stories/>
+     <Form/>
+     
+    </main>
   );
 };
 

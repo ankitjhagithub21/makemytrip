@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
-import {MdMessage,MdPhone,MdLocationPin, MdMail} from 'react-icons/md';
+import {MdPhone,MdLocationPin, MdMail} from 'react-icons/md';
+import Map from '../components/Map';
 
 const Contact = () => {
   const initialData = { name: '', email: '', subject: '', message: '' };
@@ -22,8 +23,9 @@ const Contact = () => {
   };
 
   return (
-    <section className="py-24">
-      <div className="max-w-6xl mx-auto w-full px-5">
+    <section>
+      <Map/>
+      <div className="max-w-6xl mx-auto w-full px-5 my-16">
       
 
         {/* Contact Info */}
@@ -124,6 +126,7 @@ const Contact = () => {
 
         </div>
       </div>
+     
     </section>
   );
 };

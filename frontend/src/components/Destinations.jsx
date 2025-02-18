@@ -31,10 +31,10 @@ const Destinations = () => {
                     <span className='text-gray-600 font-semibold'>PLAN YOUR TRIP</span>
                     <div className='flex flex-wrap gap-5 items-center justify-between'>
                         <h1 className='lg:text-5xl text-4xl mt-1  font-semibold'>Where to next?</h1>
-                        <Link to={"/places"} className='border border-gray-400 transition lg:block hidden font-semibold rounded-full px-6 hover:text-white  py-2 hover:bg-blue-800 text-sm'>View all destinations</Link>
+                        <Link to={"/places"} className='border border-gray-400 transition lg:block hidden font-semibold rounded-full px-6 hover:text-white  py-2 hover:bg-green-600 text-sm'>View all destinations</Link>
                     </div>
                 </div>
-                <div className="flex lg:flex-wrap md:flex-wrap slider flex-nowrap overflow-x-auto lg:justify-between md:justify-between lg:mt-10 mt-5">
+                <div className="flex lg:flex-wrap md:flex-wrap no-scrollbar flex-nowrap overflow-x-auto lg:justify-between md:justify-between lg:mt-10 mt-5">
                     {places.map((place) => (
                         <div
                             key={place.id}

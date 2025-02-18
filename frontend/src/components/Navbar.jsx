@@ -36,7 +36,7 @@ const Navbar = () => {
     fetchUser();
   }, []);
 
-  const links = ["Home", "About", "Contact"];
+  const links = ["Home", "Places", "About", "Contact"];
 
   return (
     <div className="navbar bg-[#FAFAFA] sticky top-0 z-50">
@@ -133,7 +133,7 @@ const Navbar = () => {
             </ul>
           </div>
         ) : (
-          <Link to={"/login"} className="btn btn-success text-gray-800">
+          <Link to={"/login"} className="btn btn-success rounded-full text-gray-800">
             Login
           </Link>
         )}

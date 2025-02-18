@@ -2,7 +2,11 @@
 
 *{
     font-family: "Noto Sans", serif;
-   
+    
+}
+body::-webkit-scrollbar{
+    display: none;
+    
 }
 html{
     scroll-behavior: smooth;
@@ -13,10 +17,14 @@ html{
     background-position: center;
     background-attachment: fixed;
 }
-.slider::-webkit-scrollbar{
-    display: none;
+
+.overlay{
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
+.hero{
+    background-image: url('./bg.jpg');
+}
 
 
 .loader {

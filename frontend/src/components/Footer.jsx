@@ -3,7 +3,7 @@ import SocialMedia from './SocialMedia'
 
 const Footer = () => {
   return (
-    <div className='bg-gray-200 '>
+    <div className='bg-gray-100 '>
       <footer className="footer   px-5 py-10 grid grid-cols-2 container mx-auto">
         <nav>
           <h6 className="footer-title">Services</h6>
