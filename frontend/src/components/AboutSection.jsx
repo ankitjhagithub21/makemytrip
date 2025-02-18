@@ -21,7 +21,7 @@ const AboutSection = () => {
        <section className='bg-gray-100'>
          <div className='container mx-auto flex  lg:flex-row px-5 items-center flex-col-reverse gap-10  py-20'>
             <div className='lg:w-2/4 w-full'>
-                <img src="https://lonelyplanetstatic.imgix.net/marketing/2024/elsewhere/elsewhereDriver.jpg?fit=crop&auto=format&w=500&h=700&q=75" alt="about" className='w-full md:rounded-full h-[30vh] lg:h-auto object-cover  rounded-2xl shadow-xl' />
+                <img src="https://lonelyplanetstatic.imgix.net/marketing/2024/elsewhere/elsewhereDriver.jpg?fit=crop&auto=format&w=500&h=700&q=75" alt="about" className='w-full  h-[30vh] lg:h-auto object-cover  rounded-2xl shadow-xl' />
             </div>
             <div className='flex flex-col gap-5 lg:p-10 p-0 lg:w-3/4 w-full'>
                 <h2 className=" w-full text-3xl text-transparent bg-clip-text bg-gradient-to-r from-[#00DF77] via-[#15803D]  to-[#15803D] md:text-5xl lg:pb-4 xl:pb-6 lg:text-5xl">Your dream itinerary,<br /> crafted with you</h2>

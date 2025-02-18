@@ -1,6 +1,7 @@
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Searchbar from "../components/Searchbar";
 import { getUser, logoutUser } from "../api/user";
 import { setIsLoading, setUser } from "../redux/slices/userSlice";
 import { useEffect, useState } from "react";
@@ -39,8 +40,9 @@ const Navbar = () => {
   const links = ["Home", "Places", "About", "Contact"];
 
   return (
-    <div className="navbar bg-[#FAFAFA] sticky top-0 z-50">
+    <div className="navbar bg-[#FAFAFA]  sticky top-0 z-50">
       <div className="navbar-start">
+
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
@@ -74,7 +76,7 @@ const Navbar = () => {
               </li>
             ))}
 
-          
+
           </ul>
         </div>
         <Link
@@ -84,8 +86,12 @@ const Navbar = () => {
           Make<span className="text-green-500">My</span>Trip
         </Link>
       </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
+      <div className="navbar-center hidden lg:block w-1/4">
+
+        <Searchbar />
+      </div>
+      <div className="navbar-end flex items-center gap-5">
+        <ul className="menu menu-horizontal hidden lg:flex px-1">
           {links.map((link, idx) => (
             <li key={idx}>
               <Link
@@ -97,10 +103,8 @@ const Navbar = () => {
               </Link>
             </li>
           ))}
-           
+
         </ul>
-      </div>
-      <div className="navbar-end">
         {user ? (
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button">
@@ -116,12 +120,12 @@ const Navbar = () => {
             >
               {user.role === "admin" && (
                 <>
-                <li>
-                  <Link to={"/place/new"}>Add Place</Link>
-                </li>
-                 <li>
-                 <Link to={"/users"}>Manage users</Link>
-               </li>
+                  <li>
+                    <Link to={"/place/new"}>Add Place</Link>
+                  </li>
+                  <li>
+                    <Link to={"/users"}>Manage users</Link>
+                  </li>
                 </>
               )}
               <li>
@@ -133,7 +137,7 @@ const Navbar = () => {
             </ul>
           </div>
         ) : (
-          <Link to={"/login"} className="btn btn-success rounded-full text-gray-800">
+          <Link to={"/login"} className="text-sm text-gray-800">
             Login
           </Link>
         )}

@@ -3,7 +3,7 @@
 import AboutSection from "../components/AboutSection";
 import Destinations from "../components/Destinations";
 import Form from "../components/Form";
-import Searchbar from "../components/Searchbar";
+import HomeSection from "../components/HomeSection";
 import Stories from "../components/Stories";
 import VideoSection from "../components/VideoSection";
 
@@ -15,13 +15,14 @@ const Home = () => {
 
   return (
     <main>
-      <Searchbar />
-      <Destinations/>
-      <AboutSection/>
-      <Stories/>
-      <VideoSection/>
-     <Form/>
-     
+      
+      <HomeSection/>   
+      <Destinations />
+      <AboutSection />
+      <Stories />
+      <VideoSection />
+      <Form />
+
     </main>
   );
 };
