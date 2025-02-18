@@ -55,7 +55,7 @@ const Destinations = () => {
                 </div>
 
 
-                <button className='border border-gray-400 transition block mx-auto my-5 lg:hidden font-semibold rounded-full px-6 hover:text-white  py-2 hover:bg-blue-800 text-sm'>View all destinations</button>
+                <Link to={"/"} className='border border-gray-400 transition block mx-auto my-5 lg:hidden font-semibold rounded-full px-6 hover:text-white  py-2 hover:bg-green-800 text-sm'>View all destinations</Link>
             </div>
         </section>
     )
