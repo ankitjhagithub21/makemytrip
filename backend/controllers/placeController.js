@@ -62,24 +62,30 @@ const updatePlace = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "All fields are required." });
   }
 
-  let result;
+  // Find the existing place
+  const existingPlace = await Place.findById(req.params.id);
 
-  if(req.file){
-    result = await uploadImage(req.file.path)
+  if (!existingPlace) {
+    return res.status(404).json({ message: "Place not found." });
   }
 
-  if(!result){
-    return res.status(400).json({ message: "Image upload failed.." });
+  let imageUrl = existingPlace.image; // Retain existing image
+
+  if (req.file) {
+    const result = await uploadImage(req.file.path);
+    if (!result || !result.secureUrl) {
+      return res.status(400).json({ message: "Image upload failed." });
+    }
+    imageUrl = result.secureUrl; // Update with new image URL
   }
 
-  
-
+  // Update the place
   const updatedPlace = await Place.findByIdAndUpdate(
     req.params.id,
     {
       title: title.trim(),
       description: description.trim(),
-      image: result.secureUrl,
+      image: imageUrl,
       location: location.trim(),
       country: country.trim(),
       price,
@@ -87,15 +93,12 @@ const updatePlace = asyncHandler(async (req, res) => {
     { new: true, runValidators: true }
   );
 
-  if (!updatedPlace) {
-    return res.status(404).json({ message: "Place not found." });
-  }
-
   res.status(200).json({
     message: "Place updated successfully.",
     place: updatedPlace,
   });
 });
+
 
 const deletePlace = asyncHandler(async (req, res) => {
   const deletedPlace = await Place.findByIdAndDelete(req.params.id);

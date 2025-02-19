@@ -1,14 +1,15 @@
-const Hotel = require('../models/hotel')
+const Hotel = require("../models/hotel");
 
 //desc create a hotel
 const createHotel = async (req, res) => {
   try {
-    const { name, location, price, description,  rooms, images } = req.body;
+    const { name, location, price, description, rooms, images } = req.body;
 
     // Validate required fields
     if (!name || !location || !images || !price || !description) {
-      return res.status(400).json({ message: "Please fill in all required fields." });
-    
+      return res
+        .status(400)
+        .json({ message: "Please fill in all required fields." });
     }
     // Create new hotel entry
     const newHotel = new Hotel({
@@ -18,12 +19,13 @@ const createHotel = async (req, res) => {
       price,
       description,
       rooms,
-      images
+      images,
     });
 
     await newHotel.save();
-    res.status(201).json({ message: "Hotel added successfully!", hotel: newHotel });
-
+    res
+      .status(201)
+      .json({ message: "Hotel added successfully!", hotel: newHotel });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });
@@ -64,8 +66,7 @@ const getHotelById = async (req, res) => {
 // @access Private (Only Admins)
 const updateHotel = async (req, res) => {
   try {
-  
-    const { name, location, price, description,  rooms, images } = req.body;
+    const { name, location, price, description, rooms, images } = req.body;
 
     const hotel = await Hotel.findById(req.params.id);
     if (!hotel) {
@@ -78,11 +79,10 @@ const updateHotel = async (req, res) => {
     hotel.price = price || hotel.price;
     hotel.description = description || hotel.description;
     hotel.rooms = rooms || hotel.rooms;
-   hotel.images= images || hotel.images
-   
+    hotel.images = images || hotel.images;
+
     await hotel.save();
     res.status(200).json({ message: "Hotel updated successfully!", hotel });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });
@@ -101,18 +101,16 @@ const deleteHotel = async (req, res) => {
 
     await hotel.deleteOne();
     res.status(200).json({ message: "Hotel deleted successfully!" });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });
   }
 };
 
-
-module.exports ={
-    createHotel,
-    getHotels,
-    getHotelById,
-    deleteHotel,
-    updateHotel
-}
+module.exports = {
+  createHotel,
+  getHotels,
+  getHotelById,
+  deleteHotel,
+  updateHotel,
+};

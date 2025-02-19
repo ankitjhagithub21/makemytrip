@@ -104,7 +104,7 @@ const Place = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-5 my-12">
-      <button onClick={()=>navigate("/")} className="btn btn-success">
+      <button onClick={()=>navigate("/places")} className="btn btn-success">
         
         Back</button>
       {place && <PlaceDetails place={place} deletePlace={handleDeletePlace}/>}

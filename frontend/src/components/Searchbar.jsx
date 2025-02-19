@@ -14,7 +14,7 @@ const Searchbar = () => {
   }
 
   return (
-    <form className='flex shadow-xl bg-white max-w-xl mx-auto w-full pl-4  border  rounded-full' onSubmit={handleSubmit}>
+    <form className='flex shadow-xl bg-white max-w-xl mx-auto  pl-4  border  rounded-full' onSubmit={handleSubmit}>
       <input type="text" value={searchTerm} onChange={(e) => dispatch(setSearchTerm(e.target.value))} className='w-full py-2 outline-none bg-transparent' placeholder='Search place..' />
       <button className=' py-3 outline-none pr-3 pl-2  rounded-r-full'>
         <GoSearch size={20} />
