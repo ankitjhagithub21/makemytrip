@@ -1,24 +1,27 @@
+import Searchbar from "./Searchbar"
 
 const HomeSection = () => {
   return (
-    <section>
-        <div className="flex relative">
-          <div className="absolute top-0 left-0 h-full w-full flex items-center justify-center overlay">
-            <h1 className="lg:text-7xl font-serif md:text-4xl text-3xl text-white text-center font-semibold">
-              Discover story-worthy <br /> travel moments
-            </h1>
-          </div>
-          <div>
-            <img alt="" src="./1.avif" />
-          </div>
-          <div>
-            <img alt="" src="./2.avif" />
-          </div>
-          <div>
-            <img alt="" src="./3.avif" />
-          </div>
+    <section className="lg:h-[90vh] h-[40vh] w-full">
+      <div className="flex h-full w-full relative">
+        <div className="absolute top-0 px-5 left-0 h-full w-full flex flex-col  items-center justify-center overlay">
+          <h1 className="lg:text-6xl font-serif md:text-4xl mb-5 text-3xl text-white text-center font-semibold">
+            Discover story-worthy <br /> travel moments
+          </h1>
+          <Searchbar />
         </div>
-      </section>
+        <div className="lg:w-1/2 w-full">
+          <img alt="" src="./1.avif" className="h-full w-full object-cover object-center"/>
+        </div>
+        <div className="lg:w-1/2 w-full">
+          <img alt="" src="./2.avif" className="w-full h-full object-cover object-center" />
+        </div>
+        <div className="lg:w-1/2 w-full">
+          <img alt="" src="./3.avif" className="w-full h-full object-cover object-center" />
+        </div>
+        
+      </div>
+    </section>
   )
 }
 

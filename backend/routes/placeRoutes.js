@@ -1,4 +1,5 @@
 const express = require('express');
+const placeRouter = express.Router();
 const {
   displayAllPlaces,
   getPlaceById,
@@ -11,7 +12,7 @@ const isAuthenticated = require('../middlewares/isAuthenticated');
 const isAdmin = require('../middlewares/isAdmin');
 const upload = require('../utils/multer');
 
-const placeRouter = express.Router();
+
 
 // Route to create new place
 placeRouter.post('/', isAuthenticated, isAdmin, upload.single('image'), createPlace);

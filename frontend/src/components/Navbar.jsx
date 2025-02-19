@@ -1,7 +1,6 @@
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Searchbar from "../components/Searchbar";
 import { getUser, logoutUser } from "../api/user";
 import { setIsLoading, setUser } from "../redux/slices/userSlice";
 import { useEffect, useState } from "react";
@@ -87,11 +86,7 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="navbar-center hidden lg:block w-1/4">
-
-        <Searchbar />
-      </div>
-      <div className="navbar-end flex items-center gap-5">
-        <ul className="menu menu-horizontal hidden lg:flex px-1">
+      <ul className="menu menu-horizontal hidden lg:flex px-1">
           {links.map((link, idx) => (
             <li key={idx}>
               <Link
@@ -105,6 +100,10 @@ const Navbar = () => {
           ))}
 
         </ul>
+        
+      </div>
+      <div className="navbar-end flex items-center gap-5">
+       
         {user ? (
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button">
@@ -137,7 +136,7 @@ const Navbar = () => {
             </ul>
           </div>
         ) : (
-          <Link to={"/login"} className="text-sm text-gray-800">
+          <Link to={"/login"} className="btn  btn-success  rounded-full">
             Login
           </Link>
         )}
