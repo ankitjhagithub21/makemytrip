@@ -21,6 +21,8 @@ import ResetPassword from './pages/ResetPassword';
 import Users from './pages/Users';
 import Places from './pages/Places';
 import './App.css';
+import Hotels from './pages/Hotels';
+import CreateHotel from './pages/CreateHotel';
 
 const App = () => {
 
@@ -33,6 +35,7 @@ const App = () => {
           {/* Home Route */}
           <Route path="/" element={<Home />} />
           <Route path="/places" element={<Places />} />
+          <Route path="/hotels" element={<Hotels />} />
           <Route path="/about" element={<About />} />
           <Route path="/profile" element={<ProtectedRoute>
             <Profile />
@@ -52,6 +55,13 @@ const App = () => {
           {/* Update Place route */}
           <Route exact path="/place/:id/edit" element={<AdminRoute>
             <UpdatePlace />
+          </AdminRoute>} />
+
+
+              
+          {/* Create New hotel Route */}
+          <Route exact path="/hotel/new" element={<AdminRoute>
+            <CreateHotel />
           </AdminRoute>} />
 
             {/* Update Place route */}

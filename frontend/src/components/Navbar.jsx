@@ -80,9 +80,8 @@ const Navbar = () => {
         </div>
         <Link
           to="/"
-          className="font-bold p-2 text-lg hover:bg-gray-300 rounded-lg bg-gray-100"
         >
-          Make<span className="text-green-500">My</span>Trip
+        <img src="https://promos.makemytrip.com/images/mmtlogo.webp" alt="logo" width={120} />
         </Link>
       </div>
       <div className="navbar-center hidden lg:block w-1/4">
@@ -121,6 +120,9 @@ const Navbar = () => {
                 <>
                   <li>
                     <Link to={"/place/new"}>Add Place</Link>
+                  </li>
+                  <li>
+                    <Link to={"/hotel/new"}>Add Hotel</Link>
                   </li>
                   <li>
                     <Link to={"/users"}>Manage users</Link>

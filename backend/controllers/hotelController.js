@@ -6,7 +6,7 @@ const createHotel = async (req, res) => {
     const { name, location, price, description, rooms, images } = req.body;
 
     // Validate required fields
-    if (!name || !location || !images || !price || !description) {
+    if (!name || !location || !rooms || !price || !description ) {
       return res
         .status(400)
         .json({ message: "Please fill in all required fields." });
@@ -15,11 +15,11 @@ const createHotel = async (req, res) => {
     const newHotel = new Hotel({
       name,
       location,
-      country,
       price,
       description,
       rooms,
       images,
+     
     });
 
     await newHotel.save();

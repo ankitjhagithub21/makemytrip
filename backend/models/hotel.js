@@ -8,9 +8,8 @@ const hotelSchema = new mongoose.Schema(
     description: { type: String },
     images: [{ type: String }], 
     rooms: { type: Number, required: true },
-    ratings: { type: Number, default: 0 },
   },
-  { timestamps: true }
+  { timestamps: true,versionKey:false }
 );
 
 const Hotel = mongoose.model("Hotel", hotelSchema);
