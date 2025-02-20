@@ -97,11 +97,11 @@ const Hotels = () => {
       {/* Hotel List */}
       <div className="grid lg:grid-cols-2 grid-cols-1 gap-5">
         {hotels.map((hotel) => (
-          <div key={hotel._id} className="flex gap-5 items-center shadow-lg rounded-lg bg-white p-5">
+          <div key={hotel._id} className="flex md:flex-row flex-col gap-5 items-center shadow-lg rounded-lg bg-white p-5">
             <img
               src={hotel.images[0]}
               alt={hotel.name}
-              className="h-56 w-56 object-cover object-center rounded-xl"
+              className="h-56 md:w-56 w-full object-cover object-center rounded-xl"
             />
             <div className="flex flex-col items-start gap-2">
               <h2 className="text-xl font-semibold">{hotel.name}</h2>
