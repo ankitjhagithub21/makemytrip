@@ -95,6 +95,7 @@ const updateHotel = async (req, res) => {
 const deleteHotel = async (req, res) => {
   try {
     const hotel = await Hotel.findById(req.params.id);
+    
     if (!hotel) {
       return res.status(404).json({ message: "Hotel not found" });
     }

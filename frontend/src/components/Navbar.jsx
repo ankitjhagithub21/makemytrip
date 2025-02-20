@@ -36,7 +36,7 @@ const Navbar = () => {
     fetchUser();
   }, []);
 
-  const links = ["Home", "Places", "About", "Contact"];
+  const links = ["Home", "Places", "Hotels", "Contact"];
 
   return (
     <div className="navbar bg-[#FAFAFA]  sticky top-0 z-50">

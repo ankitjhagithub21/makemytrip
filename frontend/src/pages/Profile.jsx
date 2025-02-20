@@ -4,6 +4,7 @@ import UpdateName from '../components/UpdateName'
 import ChangePassword from '../components/ChangePassword'
 import { useSelector } from 'react-redux'
 import LikedPlaces from '../components/LikedPlaces'
+import Bookings from './Bookings'
 
 
 const Profile = () => {
@@ -47,6 +48,7 @@ const Profile = () => {
                
             </div>
             <LikedPlaces/>
+            <Bookings/>
         </section>
     )
 }

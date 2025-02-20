@@ -12,7 +12,7 @@ export const hotelSlice = createSlice({
   
   reducers: {
    
-    sethotels: (state, action) => {
+    setHotels: (state, action) => {
       state.hotels = action.payload
     },
 

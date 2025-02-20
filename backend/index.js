@@ -7,6 +7,7 @@ const placeRouter = require('./routes/placeRoutes')
 const userRouter = require('./routes/userRoutes')
 const reviewRouter = require('./routes/reviewRoutes')
 const hotelRouter = require('./routes/hotelRoutes')
+const bookingRouter = require('./routes/bookingRoutes')
 const app = express()
 const port = process.env.PORT
 
@@ -28,6 +29,7 @@ app.use("/api/places",placeRouter)
 app.use("/api/users",userRouter)
 app.use("/api/reviews",reviewRouter)
 app.use("/api/hotels",hotelRouter)
+app.use("/api/bookings",bookingRouter)
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`)

@@ -23,6 +23,7 @@ import Places from './pages/Places';
 import './App.css';
 import Hotels from './pages/Hotels';
 import CreateHotel from './pages/CreateHotel';
+import Bookings from './pages/Bookings';
 
 const App = () => {
 
@@ -39,6 +40,9 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/profile" element={<ProtectedRoute>
             <Profile />
+          </ProtectedRoute>} />
+          <Route path="/bookings" element={<ProtectedRoute>
+            <Bookings />
           </ProtectedRoute>} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
