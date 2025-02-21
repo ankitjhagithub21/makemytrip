@@ -36,7 +36,7 @@ const Navbar = () => {
     fetchUser();
   }, []);
 
-  const links = ["Home", "Places", "Hotels", "Contact"];
+  const links = ["Home", "Places", "Hotels", "About","Contact"];
 
   return (
     <div className="navbar bg-[#FAFAFA]  sticky top-0 z-50">
@@ -84,7 +84,7 @@ const Navbar = () => {
         <img src="https://promos.makemytrip.com/images/mmtlogo.webp" alt="logo" width={120} />
         </Link>
       </div>
-      <div className="navbar-center hidden lg:block w-1/4">
+      <div className="navbar-center">
       <ul className="menu menu-horizontal hidden lg:flex px-1">
           {links.map((link, idx) => (
             <li key={idx}>
