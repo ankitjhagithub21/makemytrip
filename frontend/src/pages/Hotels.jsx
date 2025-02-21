@@ -4,14 +4,23 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { createBooking } from "../api/booking";
+import HotelSearch from "../components/HotelSearch";
+import LoadingPage from "../components/LoadingPage";
 
 const Hotels = () => {
   useFetchHotels();
-  const { hotels, isLoading } = useSelector((state) => state.hotel);
+  const { hotels, isLoading, searchTerm } = useSelector((state) => state.hotel);
   const { user } = useSelector((state) => state.user);
   const [checkInDate, setCheckInDate] = useState("");
   const [checkoutDate, setCheckoutDate] = useState("");
   const navigate = useNavigate();
+
+  // Filter hotels based on search term
+  const filteredHotels = hotels.filter(
+    (hotel) =>
+      hotel.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      hotel.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   // Calculate total price based on date difference
   const calculateTotalPrice = (pricePerNight) => {
@@ -36,9 +45,9 @@ const Hotels = () => {
       return toast.error("You are not logged in.");
     }
 
- if(!checkInDate || !checkoutDate){
-  return toast.error("Please select check-in and check-out date.")
- }
+    if (!checkInDate || !checkoutDate) {
+      return toast.error("Please select check-in and check-out date.");
+    }
 
     const totalPrice = calculateTotalPrice(price);
     if (totalPrice <= 0) {
@@ -64,15 +73,18 @@ const Hotels = () => {
   };
 
   if (isLoading) {
-    return <p className="text-center py-5">Loading...</p>;
+    return <LoadingPage/>;
   }
 
   return (
     <div className="max-w-6xl mx-auto px-5 w-full py-12 ">
       {/* Date Input Fields */}
-      <div className="flex gap-4 mb-8 px-5">
+      <HotelSearch />
+      <div className="flex gap-4 items-center my-8 px-5">
         <div className="flex flex-col">
-          <label htmlFor="checkInDate" className="text-gray-700 mb-1">Check-In Date</label>
+          <label htmlFor="checkInDate" className="text-gray-700 mb-1">
+            Check-In Date
+          </label>
           <input
             type="date"
             id="checkInDate"
@@ -83,7 +95,9 @@ const Hotels = () => {
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="checkoutDate" className="text-gray-700 mb-1">Check-Out Date</label>
+          <label htmlFor="checkoutDate" className="text-gray-700 mb-1">
+            Check-Out Date
+          </label>
           <input
             type="date"
             id="checkoutDate"
@@ -94,9 +108,9 @@ const Hotels = () => {
         </div>
       </div>
 
-      {/* Hotel List */}
+      {/* Filtered Hotel List */}
       <div className="grid lg:grid-cols-2 grid-cols-1 gap-5">
-        {hotels.map((hotel) => (
+        {filteredHotels.length==0 ? <div className="text-xl py-24">Hotel not found.</div> : filteredHotels.map((hotel) => (
           <div key={hotel._id} className="flex md:flex-row flex-col gap-5 items-center shadow-lg rounded-lg bg-white p-5">
             <img
               src={hotel.images[0]}
