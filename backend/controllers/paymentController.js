@@ -5,37 +5,42 @@ const Booking = require("../models/booking");
 // Initialize Stripe with your secret key
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
+
 // Create a Stripe payment intent
 exports.createPaymentIntent = async (req, res) => {
-    const { userId, bookingId, amount } = req.body;
+  const { amount } = req.body;
+  
 
-    if (!userId || !bookingId || !amount) {
-        return res.status(400).json({ message: "All fields are required!" });
-    }
+ 
 
-    try {
-        // Check if booking exists
-        const booking = await Booking.findById(bookingId);
-        if (!booking) {
-            return res.status(404).json({ message: "Booking not found!" });
-        }
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount * 100, 
+      currency: "inr",
+      description: 'Software development services',
+      
+      shipping: {
+        name: 'Jenny Rosen',
+        address: {
+          line1: '510 Townsend St',
+          postal_code: '98140',
+          city: 'San Francisco',
+          state: 'CA',
+          country: 'US',
+        },
+      },
+      payment_method_types: ["card"],
+    
+    });
+    
 
-        // Create a payment intent
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: amount * 100, // Stripe works in cents
-            currency: "inr",
-            metadata: { userId, bookingId },
-        });
-
-        res.status(200).json({
-            clientSecret: paymentIntent.client_secret,
-            message: "Payment intent created successfully!",
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Failed to create payment intent!" });
-    }
+    res.json({ clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to create payment intent." });
+  }
 };
+
 
 // Handle successful payment and save to DB
 exports.handlePaymentSuccess = async (req, res) => {
@@ -70,5 +75,18 @@ exports.handlePaymentSuccess = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Failed to handle payment success!" });
+    }
+};
+
+
+exports.getAllPayments = async (req, res) => {
+   
+    try {
+        // Check if the payment already exists
+         const payments = await Payment.find()
+        res.status(200).json({  payments });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to fetch payments" });
     }
 };

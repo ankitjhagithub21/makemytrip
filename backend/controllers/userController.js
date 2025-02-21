@@ -71,7 +71,7 @@ const signup = asyncHandler(async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      maxAge: 3600000,
+      maxAge: 1*24*60*60*1000,
     })
     .status(201)
     .json({
@@ -113,7 +113,7 @@ const login = asyncHandler(async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      maxAge: 3600000,
+      maxAge: 1*24*60*60*1000,
     })
     .json({
       success: true,

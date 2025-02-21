@@ -16,7 +16,7 @@ const Home = () => {
   return (
     <main>
       
-      <HomeSection/>   
+      <HomeSection/>       
       <Destinations />
       <AboutSection />
       <Stories />
