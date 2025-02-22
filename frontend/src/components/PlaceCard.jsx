@@ -43,6 +43,7 @@ const PlaceCard = ({ place}) => {
           src={place.image}
           className="rounded-2xl hover:opacity-90 transition h-52 w-full object-cover"
           alt={place.title}
+          loading='lazy'
         />
       </figure>
       <Link to={`/place/${place._id}`} className="card-body p-2">

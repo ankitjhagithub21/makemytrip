@@ -1,4 +1,5 @@
 const Hotel = require("../models/hotel");
+const { deleteImage } = require("../utils/uploadImage");
 
 //desc create a hotel
 const createHotel = async (req, res) => {
@@ -99,6 +100,7 @@ const deleteHotel = async (req, res) => {
     if (!hotel) {
       return res.status(404).json({ message: "Hotel not found" });
     }
+    deleteImage
 
     await hotel.deleteOne();
     res.status(200).json({ message: "Hotel deleted successfully!" });

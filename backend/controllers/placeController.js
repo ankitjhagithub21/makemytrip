@@ -1,7 +1,10 @@
 const Place = require("../models/place");
 const User = require("../models/user");
 const asyncHandler = require("../utils/asyncHandler");
-const { uploadImage } = require("../utils/uploadImage");
+const { getPublicId } = require("../utils/getPublicId");
+const { uploadImage, deleteImage } = require("../utils/uploadImage");
+const NodeCache = require('node-cache')
+const myCache = new NodeCache()
 
 const createPlace = asyncHandler(async (req, res) => {
   const { title, description, image, location, country, price } = req.body;
@@ -28,16 +31,30 @@ const createPlace = asyncHandler(async (req, res) => {
     price,
   });
 
+  
+  myCache.del("places")
+
   res.status(201).json({
     message: "Place created successfully.",
     place: newPlace,
   });
 });
 
+
 const displayAllPlaces = asyncHandler(async (req, res) => {
-  const places = await Place.find();
+  let places;
+  if (myCache.has('places')) {
+      places = myCache.get('places'); 
+  } else {
+      places = await Place.find();
+      myCache.set('places', places); 
+  }
+
   res.status(200).json(places);
 });
+
+
+
 
 const getPlaceById = asyncHandler(async (req, res) => {
   const place = await Place.findById(req.params.id).populate({
@@ -77,6 +94,7 @@ const updatePlace = asyncHandler(async (req, res) => {
       return res.status(400).json({ message: "Image upload failed." });
     }
     imageUrl = result.secureUrl; // Update with new image URL
+    await deleteImage(getPlaceById(existingPlace.image))
   }
 
   // Update the place
@@ -93,6 +111,8 @@ const updatePlace = asyncHandler(async (req, res) => {
     { new: true, runValidators: true }
   );
 
+  myCache.del("places")
+
   res.status(200).json({
     message: "Place updated successfully.",
     place: updatedPlace,
@@ -106,6 +126,9 @@ const deletePlace = asyncHandler(async (req, res) => {
   if (!deletedPlace) {
     return res.status(404).json({ message: "Place not found." });
   }
+  await deleteImage(getPublicId(deletedPlace.image))
+
+  myCache.del("places")
 
   res.status(200).json({ message: "Place deleted." });
 });
