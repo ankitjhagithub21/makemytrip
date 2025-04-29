@@ -17,8 +17,7 @@ const Bookings = () => {
   const { user } = useSelector((state) => state.user);
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [paymentLoading, setPaymentLoading] = useState(false)
-
+ 
   useEffect(() => {
     const fetchBookings = async () => {
       if (!user) {
@@ -43,23 +42,24 @@ const Bookings = () => {
   const PaymentForm = ({ bookingId, amount }) => {
     const stripe = useStripe();
     const elements = useElements();
-
+    const [isSubmitting, setIsSubmitting] = useState(false); // Local state
+  
     const handlePayment = async () => {
       if (!stripe || !elements) {
         toast.error("Stripe is not loaded yet.");
         return;
       }
-
-      setPaymentLoading(true)
+  
+      setIsSubmitting(true);
       try {
         const data = await createPayment({
           userId: user._id,
           bookingId,
           amount,
         });
-
+  
         const { clientSecret } = data;
-
+  
         const result = await stripe.confirmCardPayment(clientSecret, {
           payment_method: {
             card: elements.getElement(CardElement),
@@ -69,8 +69,7 @@ const Bookings = () => {
             },
           },
         });
-
-        console.log(result)
+  
         if (result.error) {
           toast.error(result.error.message);
         } else if (result.paymentIntent.status === "succeeded") {
@@ -80,7 +79,7 @@ const Bookings = () => {
             amount,
             transactionId: result.paymentIntent.id,
           });
-
+  
           toast.success("Payment successful!");
           setBookings((prev) =>
             prev.map((booking) =>
@@ -94,25 +93,24 @@ const Bookings = () => {
         console.error(error);
         toast.error("Payment failed.");
       } finally {
-        setPaymentLoading(false)
+        setIsSubmitting(false);
       }
     };
-
+  
     return (
       <div className="mt-4">
         <CardElement className="border p-2 rounded" />
         <button
-          disabled={paymentLoading}
+          disabled={isSubmitting}
           className="bg-indigo-600 text-white px-4 py-2 rounded mt-3"
           onClick={handlePayment}
         >
-          {
-            paymentLoading ? 'Please wait...' : `          Pay ₹${amount}`
-          }
+          {isSubmitting ? "Please wait..." : `Pay ₹${amount}`}
         </button>
       </div>
     );
   };
+  
 
   if (loading) {
     return <LoadingPage />;
