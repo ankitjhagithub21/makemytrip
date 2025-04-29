@@ -1,5 +1,6 @@
 import { MdEdit } from 'react-icons/md'
 import { useSelector } from 'react-redux'
+import { lazy } from 'react';
 const UpdateProfile = lazy(() => import('../components/UpdateProfile'));
 const UpdateName = lazy(() => import('../components/UpdateName'));
 const ChangePassword = lazy(() => import('../components/ChangePassword'));

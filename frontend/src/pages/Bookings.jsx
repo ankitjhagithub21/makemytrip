@@ -1,8 +1,8 @@
-import { useEffect, useState,lazy } from "react";
+import { useEffect, useState, lazy } from "react";
 import { useSelector } from "react-redux";
 import { getUserBookings } from "../api/booking";
 import toast from "react-hot-toast";
-const LoadingPage = lazy(()=>import('./components/LoadingPage'))
+const LoadingPage = lazy(() => import('../components/LoadingPage'))
 import { createPayment } from "../api/payment";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
@@ -17,6 +17,7 @@ const Bookings = () => {
   const { user } = useSelector((state) => state.user);
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [paymentLoading, setPaymentLoading] = useState(false)
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -49,6 +50,7 @@ const Bookings = () => {
         return;
       }
 
+      setPaymentLoading(true)
       try {
         const data = await createPayment({
           userId: user._id,
@@ -57,13 +59,13 @@ const Bookings = () => {
         });
 
         const { clientSecret } = data;
-      
+
         const result = await stripe.confirmCardPayment(clientSecret, {
           payment_method: {
             card: elements.getElement(CardElement),
             billing_details: {
               name: user.fullName,
-              email:user.email
+              email: user.email
             },
           },
         });
@@ -91,6 +93,8 @@ const Bookings = () => {
       } catch (error) {
         console.error(error);
         toast.error("Payment failed.");
+      } finally {
+        setPaymentLoading(false)
       }
     };
 
@@ -98,10 +102,13 @@ const Bookings = () => {
       <div className="mt-4">
         <CardElement className="border p-2 rounded" />
         <button
+          disabled={paymentLoading}
           className="bg-indigo-600 text-white px-4 py-2 rounded mt-3"
           onClick={handlePayment}
         >
-          Pay ₹{amount}
+          {
+            paymentLoading ? 'Please wait...' : `          Pay ₹${amount}`
+          }
         </button>
       </div>
     );

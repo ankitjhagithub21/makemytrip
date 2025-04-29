@@ -1,7 +1,7 @@
 import { useState ,lazy} from 'react';
 import toast from 'react-hot-toast';
 import {MdPhone,MdLocationPin, MdMail} from 'react-icons/md';
-const Map = lazy(()=>import('./components/Map'))
+const Map = lazy(()=>import('../components/Map'))
 
 const Contact = () => {
   const initialData = { name: '', email: '', subject: '', message: '' };
