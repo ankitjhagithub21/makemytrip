@@ -1,9 +1,10 @@
-import PlaceCard from "../components/PlaceCard";
-import HomePageLoading from "../components/HomePageLoading";
+import { useState ,lazy} from "react";
 import { useSelector } from "react-redux";
+const PlaceCard = lazy(() => import('../components/PlaceCard'));
+const HomePageLoading = lazy(() => import('../components/HomePageLoading'));
+const Searchbar = lazy(() => import('../components/Searchbar'));
 import useFetchPlaces from "../hooks/useFetchPlaces";
-import { useState } from "react";
-import Searchbar from "../components/Searchbar";
+
 
 const Places = () => {
   useFetchPlaces();

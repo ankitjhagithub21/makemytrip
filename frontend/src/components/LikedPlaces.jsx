@@ -1,6 +1,6 @@
 
-import { useEffect, useState } from 'react'
-import PlaceCard from './PlaceCard'
+import { lazy, useEffect, useState } from 'react'
+const PlaceCard = lazy(()=>import("./PlaceCard"))
 import { getUserLikedPlaces } from '../api/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPlaces } from '../redux/slices/placeSlice';

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { addReview } from "../api/review";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";

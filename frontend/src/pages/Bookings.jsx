@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,lazy } from "react";
 import { useSelector } from "react-redux";
 import { getUserBookings } from "../api/booking";
 import toast from "react-hot-toast";
-import LoadingPage from "../components/LoadingPage";
+const LoadingPage = lazy(()=>import('./components/LoadingPage'))
 import { createPayment } from "../api/payment";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, useStripe, useElements, CardElement } from "@stripe/react-stripe-js";

@@ -1,11 +1,12 @@
 import { useSelector } from "react-redux";
 import useFetchHotels from "../hooks/useFetchHotels";
-import { useState } from "react";
+import { useState,lazy } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { createBooking } from "../api/booking";
-import HotelSearch from "../components/HotelSearch";
-import LoadingPage from "../components/LoadingPage";
+
+const LoadingPage = lazy(()=>import('../components/LoadingPage'))
+const HotelSearch = lazy(()=>import('../components/HotelSearch'))
 
 const Hotels = () => {
   useFetchHotels();

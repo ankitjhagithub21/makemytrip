@@ -1,5 +1,6 @@
+import { lazy } from 'react'
 import {Link} from 'react-router-dom'
-import SocialMedia from './SocialMedia'
+const SocialMedia = lazy(()=>import("./SocialMedia"))
 
 const Footer = () => {
   return (

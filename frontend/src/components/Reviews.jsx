@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { IoMdStar, IoMdStarOutline } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { FaTrash, FaEdit } from "react-icons/fa";

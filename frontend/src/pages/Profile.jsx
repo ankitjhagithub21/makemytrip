@@ -1,11 +1,10 @@
 import { MdEdit } from 'react-icons/md'
-import UpdateProfile from '../components/UpdateProfile'
-import UpdateName from '../components/UpdateName'
-import ChangePassword from '../components/ChangePassword'
 import { useSelector } from 'react-redux'
-import LikedPlaces from '../components/LikedPlaces'
-import Bookings from './Bookings'
-
+const UpdateProfile = lazy(() => import('../components/UpdateProfile'));
+const UpdateName = lazy(() => import('../components/UpdateName'));
+const ChangePassword = lazy(() => import('../components/ChangePassword'));
+const LikedPlaces = lazy(() => import('../components/LikedPlaces'));
+const Bookings = lazy(() => import('./Bookings'));
 
 const Profile = () => {
    

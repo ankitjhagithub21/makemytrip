@@ -1,96 +1,102 @@
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import Place from './pages/Place';
-import Signup from './pages/Signup';
-import Login from './pages/Login';
-import NotFound from './pages/NotFound';
-import CreatePlace from './pages/CreatePlace';
-import UpdatePlace from './pages/UpdatePlace';
-import ScrollToTop from './components/ScrollToTop';
-import About from './pages/About';
-import Profile from './pages/Profile';
-import Contact from './pages/Contact';
-import ProtectedRoute from './routes/ProtectedRoute';
-import PublicRoute from './routes/PublicRoute';
-import AdminRoute from './routes/AdminRoute';
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
-import Users from './pages/Users';
-import Places from './pages/Places';
-import './App.css';
-import Hotels from './pages/Hotels';
-import CreateHotel from './pages/CreateHotel';
-import Bookings from './pages/Bookings';
+import { lazy, Suspense } from 'react';
+const LoadingPage = lazy(()=>import('./components/LoadingPage'))
+const Navbar = lazy(() => import('./components/Navbar'));
+const Footer = lazy(() => import('./components/Footer'));
+const Home = lazy(() => import('./pages/Home'));
+const Place = lazy(() => import('./pages/Place'));
+const Signup = lazy(() => import('./pages/Signup'));
+const Login = lazy(() => import('./pages/Login'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const CreatePlace = lazy(() => import('./pages/CreatePlace'));
+const UpdatePlace = lazy(() => import('./pages/UpdatePlace'));
+const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
+const About = lazy(() => import('./pages/About'));
+const Profile = lazy(() => import('./pages/Profile'));
+const Contact = lazy(() => import('./pages/Contact'));
+const ProtectedRoute = lazy(() => import('./routes/ProtectedRoute'));
+const PublicRoute = lazy(() => import('./routes/PublicRoute'));
+const AdminRoute = lazy(() => import('./routes/AdminRoute'));
+const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword'));
+const Users = lazy(() => import('./pages/Users'));
+const Places = lazy(() => import('./pages/Places'));
+const Hotels = lazy(() => import('./pages/Hotels'));
+const CreateHotel = lazy(() => import('./pages/CreateHotel'));
+const Bookings = lazy(() => import('./pages/Bookings'));
+import "./App.css"
 
 const App = () => {
 
   return (
     <BrowserRouter>
-      <ScrollToTop>
-        <Toaster />
-        <Navbar />
-        <Routes>
-          {/* Home Route */}
-          <Route path="/" element={<Home />} />
-          <Route path="/places" element={<Places />} />
-          <Route path="/hotels" element={<Hotels />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/profile" element={<ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>} />
-          <Route path="/bookings" element={<ProtectedRoute>
-            <Bookings />
-          </ProtectedRoute>} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
+      <Suspense fallback={<LoadingPage/>}>
+        <ScrollToTop>
+          <Toaster />
+          <Navbar />
+          <Routes>
 
-          {/* Place Details Route */}
-          <Route exact path="/place/:id" element={<Place />} />
+            {/* Home Route */}
+            <Route path="/" element={<Home />} />
+            <Route path="/places" element={<Places />} />
+            <Route path="/hotels" element={<Hotels />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/profile" element={<ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>} />
+            <Route path="/bookings" element={<ProtectedRoute>
+              <Bookings />
+            </ProtectedRoute>} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-          {/* Create New Place Route */}
-          <Route exact path="/place/new" element={<AdminRoute>
-            <CreatePlace />
-          </AdminRoute>} />
+            {/* Place Details Route */}
+            <Route exact path="/place/:id" element={<Place />} />
 
-          {/* Update Place route */}
-          <Route exact path="/place/:id/edit" element={<AdminRoute>
-            <UpdatePlace />
-          </AdminRoute>} />
+            {/* Create New Place Route */}
+            <Route exact path="/place/new" element={<AdminRoute>
+              <CreatePlace />
+            </AdminRoute>} />
 
+            {/* Update Place route */}
+            <Route exact path="/place/:id/edit" element={<AdminRoute>
+              <UpdatePlace />
+            </AdminRoute>} />
 
-              
-          {/* Create New hotel Route */}
-          <Route exact path="/hotel/new" element={<AdminRoute>
-            <CreateHotel />
-          </AdminRoute>} />
+            {/* Create New hotel Route */}
+            <Route exact path="/hotel/new" element={<AdminRoute>
+              <CreateHotel />
+            </AdminRoute>} />
 
             {/* Update Place route */}
             <Route exact path="/users" element={<AdminRoute>
-            <Users />
-          </AdminRoute>} />
+              <Users />
+            </AdminRoute>} />
 
-          {/* User Authentication Routes */}
-          <Route path="/signup" element={<PublicRoute>
-            <Signup />
-          </PublicRoute>} />
-          <Route path="/login" element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          } />
+            {/* User Authentication Routes */}
+            <Route path="/signup" element={<PublicRoute>
+              <Signup />
+            </PublicRoute>} />
+            <Route path="/login" element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            } />
 
-          {/* Fallback Not Found Route */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            {/* Fallback Not Found Route */}
+            <Route path="*" element={<NotFound />} />
 
-        <Footer />
-      </ScrollToTop>
-    </BrowserRouter>
+          </Routes>
+          <Footer />
+        </ScrollToTop>
+      </Suspense >
+    </BrowserRouter >
+
   );
 };
 
 export default App;
+

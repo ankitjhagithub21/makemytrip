@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { changePassword } from '../api/user';
 import toast from 'react-hot-toast';

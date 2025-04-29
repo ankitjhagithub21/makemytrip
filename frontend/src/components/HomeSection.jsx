@@ -1,4 +1,6 @@
-import Searchbar from "./Searchbar"
+import { lazy } from "react"
+
+const Searchbar = lazy(()=>import('./Searchbar'))
 
 const HomeSection = () => {
   return (

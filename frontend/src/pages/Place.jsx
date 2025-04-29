@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState,lazy } from "react";
 import { getPlaceById, removePlace } from "../api/place";
-import { useNavigate, useParams } from "react-router-dom";
-import PlaceLoading from "../components/PlaceLoading";
-import PlaceDetails from "../components/PlaceDetails";
-import AddReview from "../components/AddReview";
-import Reviews from "../components/Reviews";
-import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { deleteReview, editReview } from "../api/review";
-import NotFound from "./NotFound";
+
+const PlaceLoading = lazy(() => import('../components/PlaceLoading'));
+const PlaceDetails = lazy(() => import('../components/PlaceDetails'));
+const AddReview = lazy(() => import('../components/AddReview'));
+const Reviews = lazy(() => import('../components/Reviews'));
+const NotFound = lazy(() => import('./NotFound'));
 
 const Place = () => {
   const { id } = useParams();

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { sendOtp } from '../api/user'
 import toast from 'react-hot-toast'
 

@@ -1,4 +1,6 @@
-import SocialMedia from "../components/SocialMedia";
+import { lazy } from 'react';
+
+const SocialMedia = lazy(() => import('../components/SocialMedia'));
 
 const About = () => {
   return (

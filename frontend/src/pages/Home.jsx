@@ -1,13 +1,13 @@
 
 
-import AboutSection from "../components/AboutSection";
-import Destinations from "../components/Destinations";
-import Form from "../components/Form";
-import HomeSection from "../components/HomeSection";
-import Stories from "../components/Stories";
-import VideoSection from "../components/VideoSection";
+import { lazy } from 'react';
 
-// import Places from "./Places";
+const AboutSection = lazy(() => import('../components/AboutSection'));
+const Destinations = lazy(() => import('../components/Destinations'));
+const Form = lazy(() => import('../components/Form'));
+const HomeSection = lazy(() => import('../components/HomeSection'));
+const Stories = lazy(() => import('../components/Stories'));
+const VideoSection = lazy(() => import('../components/VideoSection'));
 
 
 const Home = () => {
